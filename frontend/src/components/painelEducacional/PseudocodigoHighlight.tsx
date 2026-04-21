@@ -19,25 +19,25 @@ export const PseudocodigoHighlight: React.FC<PseudocodigoHighlightProps> = ({
     // Reset ao mudar de operação
     setPassoAtivoIndex(0);
     setIsPlaying(false);
-    if (operacao && operacao.passos_executados.length > 0) {
+    if (operacao && (operacao.passos_executados || []).length > 0) {
       onPassoChange(1); // 1-based no componente pai
     }
   }, [operacao]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (isPlaying && operacao && passoAtivoIndex < operacao.passos_executados.length - 1) {
+    if (isPlaying && operacao && passoAtivoIndex < (operacao.passos_executados || []).length - 1) {
       interval = setInterval(() => {
         setPassoAtivoIndex(prev => {
           const next = prev + 1;
           onPassoChange(next + 1);
-          if (next >= operacao.passos_executados.length - 1) {
+          if (next >= (operacao.passos_executados || []).length - 1) {
             setIsPlaying(false);
           }
           return next;
         });
       }, velocidade);
-    } else if (isPlaying && operacao && passoAtivoIndex >= operacao.passos_executados.length - 1) {
+    } else if (isPlaying && operacao && passoAtivoIndex >= (operacao.passos_executados || []).length - 1) {
       setIsPlaying(false);
     }
     return () => clearInterval(interval);
@@ -53,7 +53,7 @@ export const PseudocodigoHighlight: React.FC<PseudocodigoHighlightProps> = ({
   };
 
   const handleNext = () => {
-    if (operacao && passoAtivoIndex < operacao.passos_executados.length - 1) {
+    if (operacao && passoAtivoIndex < (operacao.passos_executados || []).length - 1) {
       setPassoAtivoIndex(prev => {
         onPassoChange(prev + 2);
         return prev + 1;
@@ -69,8 +69,8 @@ export const PseudocodigoHighlight: React.FC<PseudocodigoHighlightProps> = ({
     );
   }
 
-  const passos = operacao.passos_executados;
-  const passoAtivo = passos[passoAtivoIndex];
+  const passos = operacao.passos_executados || [];
+  const passoAtivo = passos[passoAtivoIndex] || null;
 
   return (
     <div className="flex flex-col h-full bg-neutral-900 border border-white/10 rounded-lg overflow-hidden flex-1 min-h-0">

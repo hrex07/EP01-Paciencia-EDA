@@ -19,10 +19,10 @@ export const LogOperacoes: React.FC<LogOperacoesProps> = ({
 }) => {
   const operacoesFiltradas = filtro === 'todas' 
     ? operacoes 
-    : operacoes.filter(op => op.estrutura_tipo.toLowerCase().includes(filtro.toLowerCase()));
+    : operacoes.filter(op => (op.estrutura_tipo || '').toLowerCase().includes(filtro.toLowerCase()));
 
   const getIconeEstrutura = (tipo: string) => {
-    const t = tipo.toLowerCase();
+    const t = (tipo || '').toLowerCase();
     if (t.includes('pilha')) return <Layers size={16} className="text-blue-400" />;
     if (t.includes('fila')) return <AlignJustify size={16} className="text-green-400" />;
     if (t.includes('lista')) return <List size={16} className="text-purple-400" />;
@@ -75,7 +75,7 @@ export const LogOperacoes: React.FC<LogOperacoesProps> = ({
                   </span>
                 </div>
                 <div className="text-xs text-gray-500 truncate mt-0.5">
-                  {op.nome_estrutura} ({op.passos_executados.length} passos)
+                  {op.nome_estrutura} ({(op.passos_executados || []).length} passos)
                 </div>
               </div>
             </div>
