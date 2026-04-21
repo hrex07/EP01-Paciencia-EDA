@@ -1,0 +1,39 @@
+schema: spec-driven
+
+context: |
+  Projeto acadêmico de Mestrado em Computação Aplicada (IPT).
+  Disciplina: Estruturas de Dados e Análise de Algoritmos.
+  
+  Objetivo: Implementar o jogo Paciência (Solitaire) como objeto de aprendizagem
+  para ensino de estruturas de dados (Pilha, Fila, Lista Ligada) e algoritmos
+  (recursão, ordenação bubble/merge/quick, busca).
+  
+  Tech stack: Python (FastAPI) backend + React (TypeScript) frontend.
+  Estado do jogo gerenciado no backend. Deploy público na internet.
+  
+  Convenções de código:
+  - Python: snake_case, variáveis com mínimo 2 palavras, docstrings Google style
+  - React: camelCase, JSDoc
+  - Idioma: Português (Brasil) em todo o projeto
+  - Classes de EDs: pseudocódigo | descrição breve em cada linha do algoritmo
+  - Estruturas de dados implementadas from scratch (sem bibliotecas)
+  - Cada operação retorna resultado + log narrado passo a passo
+  
+  Referências:
+  - docs/EP01 Paciência.pdf (enunciado do exercício)
+  - docs/Artigo.pdf (artigo TISE 2014 sobre o Projeto Paciência)
+
+rules:
+  proposal:
+    - Escrever em Português (Brasil)
+    - Manter foco acadêmico, não comercial
+    - Referenciar os requisitos do EP01
+  design:
+    - Escrever em Português (Brasil)
+    - Incluir diagramas ASCII para arquitetura
+    - Detalhar o formato dos logs narrados das EDs
+    - Descrever o sistema de streaks
+  tasks:
+    - Escrever em Português (Brasil)
+    - Organizar em 5 fases: Fundação, Motor, Interface, Educacional, Deploy
+    - Tarefas devem ser granulares e testáveis

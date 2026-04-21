@@ -1,0 +1,99 @@
+"""Representação de uma carta de baralho tradicional (52 cartas)."""
+
+from __future__ import annotations
+
+from typing import Final
+
+from modelo.excecao_carta import CartaInvalidaError
+
+_NAIPE_PARA_SIMBOLO: Final[dict[str, str]] = {
+    "c": "\u2665",
+    "o": "\u2666",
+    "p": "\u2663",
+    "e": "\u2660",
+}
+
+
+class CartaBaralho:
+    """Carta com valor numérico, naipe e estado de visibilidade (virada ou não).
+
+    Attributes:
+        numero_carta: Valor de 1 (Ás) a 13 (Rei).
+        naipe_carta: Letra do naipe em minúsculas: 'c' copas, 'o' ouros,
+            'p' paus, 'e' espadas.
+        status_carta: True se a face está visível (virada para cima).
+    """
+
+    def __init__(
+        self,
+        numero_carta: int,
+        naipe_carta: str,
+        *,
+        status_carta: bool = False,
+    ) -> None:
+        """Instancia uma carta validando domínio de número e naipe.
+
+        Args:
+            numero_carta: Inteiro de 1 a 13.
+            naipe_carta: Um dentre 'c', 'o', 'p', 'e'.
+            status_carta: Se True, carta virada para cima.
+
+        Raises:
+            CartaInvalidaError: Se número ou naipe estiverem fora do permitido.
+        """
+        if numero_carta < 1 or numero_carta > 13:
+            raise CartaInvalidaError(
+                f"numero_carta deve estar entre 1 e 13, recebido: {numero_carta}"
+            )
+        naipe_normalizado = naipe_carta.lower().strip()
+        if naipe_normalizado not in _NAIPE_PARA_SIMBOLO:
+            raise CartaInvalidaError(
+                f"naipe_carta deve ser um de 'c','o','p','e', recebido: {naipe_carta!r}"
+            )
+        self.numero_carta = numero_carta
+        self.naipe_carta = naipe_normalizado
+        self.status_carta = status_carta
+
+    def cor_carta(self) -> str:
+        """Retorna a cor da carta para regras de alternância no tableau.
+
+        Returns:
+            'vermelha' para copas e ouros; 'preta' para paus e espadas.
+        """
+        if self.naipe_carta in ("c", "o"):
+            return "vermelha"
+        return "preta"
+
+    def texto_carta(self) -> str:
+        """Representação curta legível: número + símbolo do naipe Unicode.
+
+        Returns:
+            Texto como 'A♠', '10♥', 'K♦'.
+        """
+        simbolo_naipe = _NAIPE_PARA_SIMBOLO[self.naipe_carta]
+        if self.numero_carta == 1:
+            rotulo_valor = "A"
+        elif self.numero_carta == 11:
+            rotulo_valor = "J"
+        elif self.numero_carta == 12:
+            rotulo_valor = "Q"
+        elif self.numero_carta == 13:
+            rotulo_valor = "K"
+        else:
+            rotulo_valor = str(self.numero_carta)
+        return f"{rotulo_valor}{simbolo_naipe}"
+
+    def __repr__(self) -> str:
+        return (
+            f"CartaBaralho(numero_carta={self.numero_carta!r}, "
+            f"naipe_carta={self.naipe_carta!r}, status_carta={self.status_carta!r})"
+        )
+
+    def __eq__(self, outro_objeto: object) -> bool:
+        if not isinstance(outro_objeto, CartaBaralho):
+            return NotImplemented
+        return (
+            self.numero_carta == outro_objeto.numero_carta
+            and self.naipe_carta == outro_objeto.naipe_carta
+            and self.status_carta == outro_objeto.status_carta
+        )
