@@ -37,6 +37,7 @@ def _validar_pode_listar(
         return False, "Apenas um Rei pode ser movido para uma lista vazia."
     
     ultima_carta = lista_destino.obter_ultima_carta(registrar_passos=False)["valor_retornado"]
+    
     if carta_mover.cor_carta() == ultima_carta.cor_carta():
         return False, "As cores devem ser alternadas (preto/vermelho)."
     
