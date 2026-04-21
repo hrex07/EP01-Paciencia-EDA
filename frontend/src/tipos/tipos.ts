@@ -1,6 +1,6 @@
 export interface CartaBaralho {
-  numero_carta: number;
-  naipe_carta: "c" | "o" | "p" | "e";
+  numero_carta?: number;
+  naipe_carta?: "c" | "o" | "p" | "e";
   status_carta: boolean;
   texto: string;
   cor?: "vermelha" | "preta";

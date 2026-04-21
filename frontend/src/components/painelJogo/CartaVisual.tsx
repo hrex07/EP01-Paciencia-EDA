@@ -30,11 +30,14 @@ export const CartaVisual: React.FC<CartaVisualProps> = ({
   const { numero_carta, naipe_carta, status_carta, cor } = carta;
   
   // Rótulo do valor
-  let rotulo = numero_carta.toString();
-  if (numero_carta === 1) rotulo = 'A';
-  if (numero_carta === 11) rotulo = 'J';
-  if (numero_carta === 12) rotulo = 'Q';
-  if (numero_carta === 13) rotulo = 'K';
+  let rotulo = "";
+  if (status_carta && numero_carta !== undefined) {
+    rotulo = numero_carta.toString();
+    if (numero_carta === 1) rotulo = 'A';
+    if (numero_carta === 11) rotulo = 'J';
+    if (numero_carta === 12) rotulo = 'Q';
+    if (numero_carta === 13) rotulo = 'K';
+  }
 
   const textColor = cor === 'vermelha' ? 'text-red-600' : 'text-gray-900';
 
@@ -52,7 +55,7 @@ export const CartaVisual: React.FC<CartaVisualProps> = ({
         ${status_carta ? 'bg-white' : 'bg-blue-800 bg-[radial-gradient(#1e3a8a_1px,transparent_1px)] [background-size:8px_8px]'}
       `}
     >
-      {status_carta ? (
+      {status_carta && naipe_carta !== undefined ? (
         <div className="absolute inset-0 flex flex-col p-1.5 justify-between">
           {/* Top Left */}
           <div className="flex flex-col items-center self-start leading-none">

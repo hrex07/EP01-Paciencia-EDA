@@ -24,8 +24,10 @@ export const VisualizadorEstrutura: React.FC<VisualizadorEstruturaProps> = ({
   }
 
   // Get the state vector from the current step if available
-  const passos = operacao.passos_executados;
-  const passoInfo = passos[Math.min(passoAtual - 1, passos.length - 1)] || passos[passos.length - 1];
+  const passos = operacao.passos_executados || [];
+  const passoInfo = passos.length > 0 
+    ? passos[Math.min(Math.max(0, passoAtual - 1), passos.length - 1)] 
+    : null;
   
   // Se a operação for Bubble Sort, etc, teremos estado_vetor
   const arrayVis = passoInfo?.estado_vetor;
@@ -216,7 +218,7 @@ export const VisualizadorEstrutura: React.FC<VisualizadorEstruturaProps> = ({
     );
   };
 
-  const tipo = operacao.estrutura_tipo.toLowerCase();
+  const tipo = (operacao.estrutura_tipo || '').toLowerCase();
   
   return (
     <div className="bg-neutral-900 border border-white/10 rounded-lg overflow-hidden flex items-center justify-center min-h-[220px]">
