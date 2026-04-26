@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { flushSync } from 'react-dom';
 import type { EstadoJogo, OperacaoRealizada, StreakJogo } from '../../tipos/tipos';
 import { jogoService } from '../../servicos/apiJogo';
+import { somUtils } from '../../servicos/somUtils';
 import { FilaCompra } from './FilaCompra';
 import { FundacaoPilha } from './FundacaoPilha';
 import { ColunaTablau } from './ColunaTablau';
@@ -88,6 +89,7 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({
 
   const handleFilaClick = () => {
     if (loading || emJogadaRef.current) return;
+    somUtils.playClick();
     if (origemSelecionada && origemSelecionada.tipo === 'fila') {
       // Reposicionar
       executarMovimento(1);
@@ -99,6 +101,7 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({
 
   const handlePilhaClick = (naipe: string) => {
     if (loading || emJogadaRef.current) return;
+    somUtils.playClick();
     if (!origemSelecionada) {
       // Se clica em uma pilha sem origem, selecionamos o topo da pilha
       if (estadoJogo.estruturas.pilhas_fundacao[naipe].length > 0) {
@@ -118,6 +121,7 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({
 
   const handleListaClick = (indiceDestino: number, posicaoCorte?: number) => {
     if (loading || emJogadaRef.current) return;
+    somUtils.playClick();
     if (!origemSelecionada) {
       // Se não tem origem, selecionamos da lista (requer posicaoCorte)
       if (posicaoCorte !== undefined) {

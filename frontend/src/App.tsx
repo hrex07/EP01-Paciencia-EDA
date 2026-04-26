@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MesaJogo } from './components/painelJogo';
+import { MesaJogo, EfeitosStreak } from './components/painelJogo';
 import { 
   LogOperacoes, 
   ResumoEstruturas, 
@@ -8,6 +8,9 @@ import {
   ComparadorAlgoritmos 
 } from './components/painelEducacional';
 import type { EstadoJogo, OperacaoRealizada, PassoExecucao, StreakJogo } from './tipos/tipos';
+import { jogoService } from './servicos/apiJogo';
+import { somUtils } from './servicos/somUtils';
+import { RotateCcw, BarChart2, Volume2, VolumeX, Menu } from 'lucide-react';
 
 /** A API devolve `log_preparacao` como lista de passos (não de operações). Envolve numa operação para o painel. */
 function operacaoDePreparacao(passos: PassoExecucao[]): OperacaoRealizada {
@@ -19,14 +22,13 @@ function operacaoDePreparacao(passos: PassoExecucao[]): OperacaoRealizada {
     passos_executados: passos,
   };
 }
-import { jogoService } from './servicos/apiJogo';
-import { RotateCcw, BarChart2, Volume2, VolumeX, Menu } from 'lucide-react';
 
 function App() {
   const [estado, setEstado] = useState<EstadoJogo | null>(null);
   const [loading, setLoading] = useState(false);
   const [painelAberto, setPainelAberto] = useState(false);
   const [somAtivo, setSomAtivo] = useState(true);
+  const [streakAtivo, setStreakAtivo] = useState<StreakJogo | undefined>(undefined);
 
   // Estados do Painel Educacional
   const [operacoes, setOperacoes] = useState<OperacaoRealizada[]>([]);
@@ -37,6 +39,7 @@ function App() {
 
   const iniciarJogo = async () => {
     setLoading(true);
+    somUtils.playClick();
     try {
       const resp = await jogoService.criarNovoJogo(true);
       setEstado(resp.estado_jogo);
@@ -52,22 +55,34 @@ function App() {
       }
     } catch (e) {
       console.error('Erro ao iniciar jogo:', e);
+      somUtils.playErro();
     } finally {
       setLoading(false);
     }
   };
 
   const handleOperacoes = (ops: OperacaoRealizada[], streak?: StreakJogo) => {
-    // Adiciona as novas operações no topo (ou no final, dependendo da UX preferida, vamos adicionar no topo)
+    // Adiciona as novas operações no topo
     setOperacoes(prev => [...ops, ...prev]);
     if (ops.length > 0) {
-      setOperacaoAtiva(ops[0]);
+      const ultimaOp = ops[0];
+      setOperacaoAtiva(ultimaOp);
       setPassoAtual(1);
       setAbaAtiva('estruturas');
+      
+      // Toca som baseado no sucesso da jogada
+      if (ultimaOp.operacao_sucesso) {
+        somUtils.playClick();
+      } else {
+        somUtils.playErro();
+      }
     }
     
     if (streak) {
-      console.log("Streak:", streak.nivel_efeito, streak.mensagem_educacional);
+      setStreakAtivo(streak);
+      if (streak.nivel_efeito && streak.nivel_efeito !== 'erro') {
+        somUtils.playStreak(streak.nivel_efeito);
+      }
     }
   };
 
@@ -75,8 +90,13 @@ function App() {
     <div className="min-h-screen bg-neutral-900 text-slate-100 flex flex-col font-sans overflow-hidden">
       {/* Header */}
       <header className="h-16 bg-neutral-950 border-b border-white/10 flex items-center justify-between px-6 shrink-0 z-10">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center font-bold">P</div>
+        <div className="flex items-center space-x-4">
+          <img 
+            src="https://ipt.br/home/wp-content/uploads/2025/07/Group-1321314315.svg" 
+            alt="IPT Logo" 
+            className="h-8 brightness-0 invert" 
+          />
+          <div className="h-6 w-px bg-white/10" />
           <h1 className="text-xl font-semibold tracking-wide">Paciência Educacional</h1>
         </div>
         
@@ -86,7 +106,7 @@ function App() {
             onClick={iniciarJogo}
             disabled={loading}
             className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed rounded-md font-medium transition-colors"
-            title="Inicia uma partida nova (outro embaralhamento e outra sessão)"
+            title="Inicia uma partida nova"
           >
             <RotateCcw size={18} />
             <span>{loading ? 'A preparar...' : 'Novo Jogo'}</span>
@@ -99,7 +119,11 @@ function App() {
           </button>
           
           <button 
-            onClick={() => setSomAtivo(!somAtivo)}
+            onClick={() => {
+              const novo = !somAtivo;
+              setSomAtivo(novo);
+              somUtils.setAtivo(novo);
+            }}
             className="p-2 hover:bg-white/10 rounded-md text-gray-400 hover:text-white transition-colors"
             title={somAtivo ? "Mudo" : "Ativar Som"}
           >
@@ -119,9 +143,11 @@ function App() {
       {/* Main Content Area */}
       <main className="flex-1 flex overflow-hidden">
         {/* Lado Esquerdo: Jogo (Flexível) */}
-        <section className={`h-full overflow-auto p-6 transition-all duration-300 flex items-start justify-center
+        <section className={`h-full overflow-auto p-6 transition-all duration-300 flex items-start justify-center relative
           ${painelAberto ? 'w-full lg:w-7/12 xl:w-3/5' : 'w-full'}
         `}>
+          <EfeitosStreak streak={streakAtivo} />
+          
           {!estado ? (
             <div className="flex flex-col items-center justify-center h-full text-center max-w-md">
               <div className="w-24 h-32 bg-blue-800/50 rounded-xl border-2 border-dashed border-blue-400/50 mb-6 flex items-center justify-center">

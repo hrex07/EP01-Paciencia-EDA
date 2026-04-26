@@ -1,4 +1,4 @@
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 
 // Sons base (placeholders, na prática seriam arquivos .mp3 na pasta public)
 const sounds = {
