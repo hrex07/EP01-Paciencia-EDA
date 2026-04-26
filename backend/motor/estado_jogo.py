@@ -69,8 +69,7 @@ class EstadoJogo:
             cartas_pilha = []
             atual_pilha = pilha.elemento_topo
             while atual_pilha is not None:
-                # O topo na pilha é a cabeça, então a lista sai invertida (do topo pra base).
-                # Para facilitar a UI, geralmente é melhor inverter, mas vamos manter simples.
+                # Return in base-to-top order for the UI as well
                 cartas_pilha.insert(0, _serializar_carta(atual_pilha.dados_carta))
                 atual_pilha = atual_pilha.proximo_no
             pilhas_dict[naipe] = cartas_pilha
@@ -117,6 +116,11 @@ class EstadoJogo:
             cartas_pilha = []
             atual_pilha = pilha.elemento_topo
             while atual_pilha is not None:
+                # Top-to-bottom order: the first in list is the top of the stack.
+                # When deserializing, we will reverse the list to push from bottom up,
+                # or just change how we serialize. 
+                # Let's keep it simple: list = [bottom, ..., top]
+                # So we use insert(0) to get bottom-to-top.
                 cartas_pilha.insert(0, atual_pilha.dados_carta.serializar_completo())
                 atual_pilha = atual_pilha.proximo_no
             pilhas_dict[naipe] = {"cartas": cartas_pilha}
