@@ -2,3 +2,12 @@ node_modules/
 __pycache__/
 .env
 .cursor/
+frontend_broken/
+.firebase
+.playwright-mcp
+.venv/
+frontend/dist/
+.pytest_cache/
+.ruff_cache/
+.vscode/
+.cursor/
