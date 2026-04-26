@@ -10,7 +10,7 @@ interface FundacaoPilhaProps {
 }
 
 export const FundacaoPilha: React.FC<FundacaoPilhaProps> = ({ naipe, cartas, onPilhaClick, destacada }) => {
-  const topo = cartas.length > 0 ? cartas[0] : null; // Topo está na frente (índice 0)
+  const topo = cartas.length > 0 ? cartas[cartas.length - 1] : null; // Topo é o último elemento do array
 
   const corFundo = naipe === 'c' || naipe === 'o' ? 'text-red-500/20' : 'text-gray-500/20';
   const simbolos: Record<string, string> = { c: '♥', o: '♦', p: '♣', e: '♠' };
