@@ -101,7 +101,9 @@ class EstadoJogo:
         }
 
     def serializar_completo(self) -> dict[str, Any]:
-        """Serializa o estado COMPLETO para o Banco de Dados (sem esconder cartas)."""
+        """Serializa o estado COMPLETO para o Banco de Dados.
+        Usa dicionários para envolver listas e evitar erros de 'invalid nested entity' no Firestore.
+        """
         # Fila
         fila_cartas = []
         atual_fila = self.fila_compra.no_frente
@@ -115,10 +117,9 @@ class EstadoJogo:
             cartas_pilha = []
             atual_pilha = pilha.elemento_topo
             while atual_pilha is not None:
-                # Na serialização para DB, manter a mesma lógica de ordem (base->topo)
                 cartas_pilha.insert(0, atual_pilha.dados_carta.serializar_completo())
                 atual_pilha = atual_pilha.proximo_no
-            pilhas_dict[naipe] = cartas_pilha
+            pilhas_dict[naipe] = {"cartas": cartas_pilha}
 
         # Tableau
         tableau_listas = []
@@ -128,7 +129,7 @@ class EstadoJogo:
             while atual_lista is not None:
                 cartas_lista.append(atual_lista.dados_carta.serializar_completo())
                 atual_lista = atual_lista.proximo_no
-            tableau_listas.append(cartas_lista)
+            tableau_listas.append({"cartas": cartas_lista})
 
         return {
             "id_sessao": self.id_sessao,
@@ -137,7 +138,7 @@ class EstadoJogo:
             "maior_sequencia": self.maior_sequencia,
             "total_jogadas": self.total_jogadas,
             "estruturas": {
-                "fila_compra": fila_cartas,
+                "fila_compra": {"cartas": fila_cartas},
                 "pilhas_fundacao": pilhas_dict,
                 "listas_tableau": tableau_listas,
             },
@@ -157,25 +158,23 @@ class EstadoJogo:
 
         # Fila
         estado.fila_compra = FilaCartas.desserializar(
-            estruturas["fila_compra"], nome_fila="fila_compra"
+            estruturas["fila_compra"]["cartas"], nome_fila="fila_compra"
         )
 
         # Pilhas
         for naipe in ["c", "o", "p", "e"]:
-            nome_p = f"pilha_{naipe}" # Simplificando mas deveria bater com o __init__
-            # No __init__: copas, ouros, paus, espadas.
             mapa_nomes = {"c": "copas", "o": "ouros", "p": "paus", "e": "espadas"}
             nome_real = f"pilha_{mapa_nomes[naipe]}"
             estado.pilhas_fundacao[naipe] = PilhaCartas.desserializar(
-                estruturas["pilhas_fundacao"][naipe], nome_pilha=nome_real
+                estruturas["pilhas_fundacao"][naipe]["cartas"], nome_pilha=nome_real
             )
 
         # Tableau
         estado.listas_tableau = []
-        for i, lista_json in enumerate(estruturas["listas_tableau"]):
+        for i, lista_wrapper in enumerate(estruturas["listas_tableau"]):
             estado.listas_tableau.append(
                 ListaLigadaCartas.desserializar(
-                    lista_json, nome_lista=f"lista_ligada_{i+1}"
+                    lista_wrapper["cartas"], nome_lista=f"lista_ligada_{i+1}"
                 )
             )
 
