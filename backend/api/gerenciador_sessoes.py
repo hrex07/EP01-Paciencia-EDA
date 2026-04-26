@@ -9,13 +9,14 @@ from motor.estado_jogo import EstadoJogo
 
 # Configurações do Firestore
 PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT", "ipt-master")
+DATABASE_ID = os.getenv("FIRESTORE_DATABASE", "main")
 COLECAO_SESSOES = "sessoes"
 
 # Tempo de expiração (TTL) em segundos. Ex: 2 horas = 7200s
 TTL_SESSAO_SEGUNDOS = 7200
 
-# Inicializa o cliente Firestore apontando para a base 'main'
-db = firestore.Client(project=PROJECT_ID, database="main")
+# Inicializa o cliente Firestore apontando para a base configurada
+db = firestore.Client(project=PROJECT_ID, database=DATABASE_ID)
 
 
 def obter_estado(id_sessao: str) -> Optional[EstadoJogo]:

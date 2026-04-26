@@ -1,10 +1,10 @@
-// Configuração do Firebase para o Frontend
+// Configuração do Firebase para o Frontend usando variáveis de ambiente (Vite)
 export const firebaseConfig = {
-  apiKey: "AIzaSyDdIJ4LHtQLnGNZXNeHmMeWg03lmtaZWmo",
-  authDomain: "ipt-master.firebaseapp.com",
-  projectId: "ipt-master",
-  storageBucket: "ipt-master.firebasestorage.app",
-  messagingSenderId: "869160643502",
-  appId: "1:869160643502:web:d31677698848432338b63f",
-  measurementId: "G-Z3LE9LGJED"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
