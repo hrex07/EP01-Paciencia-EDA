@@ -8,6 +8,7 @@ from modelo.pilha_cartas import PilhaCartas
 from modelo.fila_cartas import FilaCartas
 from modelo.lista_ligada_cartas import ListaLigadaCartas
 from api.schemas import CartaEntrada
+from api.serializacao_resposta import sanitizar_motor_para_json
 
 rotas_estruturas = APIRouter()
 
@@ -26,7 +27,9 @@ def _carta_from_schema(c: CartaEntrada) -> CartaBaralho:
 # == PILHA ==
 @rotas_estruturas.post("/pilha/empilhar", summary="Demonstração: Push (Pilha)")
 def demo_pilha_empilhar(carta: CartaEntrada = Body(...)) -> dict[str, Any]:
-    return PLAYGROUND_PILHA.empilhar(_carta_from_schema(carta), registrar_passos=True)
+    return sanitizar_motor_para_json(
+        PLAYGROUND_PILHA.empilhar(_carta_from_schema(carta), registrar_passos=True)
+    )
 
 
 @rotas_estruturas.post("/pilha/desempilhar", summary="Demonstração: Pop (Pilha)")
@@ -40,7 +43,9 @@ def demo_pilha_desempilhar() -> dict[str, Any]:
 # == FILA ==
 @rotas_estruturas.post("/fila/enfileirar", summary="Demonstração: Enqueue (Fila)")
 def demo_fila_enfileirar(carta: CartaEntrada = Body(...)) -> dict[str, Any]:
-    return PLAYGROUND_FILA.enfileirar(_carta_from_schema(carta), registrar_passos=True)
+    return sanitizar_motor_para_json(
+        PLAYGROUND_FILA.enfileirar(_carta_from_schema(carta), registrar_passos=True)
+    )
 
 
 @rotas_estruturas.post("/fila/desenfileirar", summary="Demonstração: Dequeue (Fila)")
@@ -54,7 +59,9 @@ def demo_fila_desenfileirar() -> dict[str, Any]:
 # == LISTA LIGADA ==
 @rotas_estruturas.post("/lista/inserir_final", summary="Demonstração: Append (Lista)")
 def demo_lista_inserir(carta: CartaEntrada = Body(...)) -> dict[str, Any]:
-    return PLAYGROUND_LISTA.inserir_final(_carta_from_schema(carta), registrar_passos=True)
+    return sanitizar_motor_para_json(
+        PLAYGROUND_LISTA.inserir_final(_carta_from_schema(carta), registrar_passos=True)
+    )
 
 
 @rotas_estruturas.post("/lista/remover_final", summary="Demonstração: Remove Last (Lista)")

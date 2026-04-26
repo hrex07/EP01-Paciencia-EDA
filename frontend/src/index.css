@@ -71,7 +71,9 @@ h1,
 h2 {
   font-family: var(--heading);
   font-weight: 500;
-  color: var(--text-h);
+  /* inherit so Tailwind + parent (e.g. App text-slate-100) win; var(--text-h) forced dark
+     text on dark bg when prefers-color-scheme is light, which looked "blank" */
+  color: inherit;
 }
 
 h1 {

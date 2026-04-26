@@ -8,6 +8,9 @@ interface CartaVisualProps {
   destacada?: boolean;
   onClick?: () => void;
   style?: React.CSSProperties;
+  /** Atributos de teste (Playwright) — índice da carta na coluna. */
+  dataCartaIndice?: number;
+  dataColunaIndice?: number;
 }
 
 const NaipeIcone = ({ naipe, cor }: { naipe: string; cor: string }) => {
@@ -26,6 +29,8 @@ export const CartaVisual: React.FC<CartaVisualProps> = ({
   destacada = false,
   onClick,
   style = {},
+  dataCartaIndice,
+  dataColunaIndice,
 }) => {
   const { numero_carta, naipe_carta, status_carta, cor } = carta;
   
@@ -41,9 +46,16 @@ export const CartaVisual: React.FC<CartaVisualProps> = ({
 
   const textColor = cor === 'vermelha' ? 'text-red-600' : 'text-gray-900';
 
+  const onClickComum = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onClick?.();
+  };
+
   return (
     <motion.div
-      onClick={onClick}
+      data-carta-indice={dataCartaIndice}
+      data-columna-indice={dataColunaIndice}
+      onClick={onClick ? onClickComum : undefined}
       style={style}
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
@@ -56,7 +68,7 @@ export const CartaVisual: React.FC<CartaVisualProps> = ({
       `}
     >
       {status_carta && naipe_carta !== undefined ? (
-        <div className="absolute inset-0 flex flex-col p-1.5 justify-between">
+        <div className="pointer-events-none absolute inset-0 flex flex-col p-1.5 justify-between">
           {/* Top Left */}
           <div className="flex flex-col items-center self-start leading-none">
             <span className={`text-lg font-bold ${textColor}`}>{rotulo}</span>
@@ -75,7 +87,7 @@ export const CartaVisual: React.FC<CartaVisualProps> = ({
           </div>
         </div>
       ) : (
-        <div className="absolute inset-1 border-2 border-white/20 rounded-sm"></div>
+        <div className="pointer-events-none absolute inset-1 border-2 border-white/20 rounded-sm"></div>
       )}
     </motion.div>
   );

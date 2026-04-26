@@ -10,7 +10,7 @@ from modelo.no_encadeado import NoEncadeado
 
 
 class ListaLigadaCartas:
-    """Lista duplamente encadeada para colunas do tableau.
+    """Lista duplamente encadeada para colunas da mesa.
 
     Attributes:
         nome_lista: Identificador estável para logs (ex.: lista_ligada_3).
@@ -52,7 +52,7 @@ class ListaLigadaCartas:
     def inserir_final(
         self,
         carta_nova: CartaBaralho,
-        *,
+        *, #Força o uso de argumentos nomeados
         registrar_passos: bool = True,
     ) -> dict[str, Any]:
         """Insere carta após o último nó."""
@@ -326,7 +326,7 @@ class ListaLigadaCartas:
 
         Returns:
             Dicionário com `valor_retornado` = lista de `CartaBaralho` removidas,
-            na ordem de cima do tableau (início do sufixo até o final).
+            na ordem de cima da mesa (início do sufixo até o final).
         """
         lista_passos: list[dict[str, Any]] = []
         if (

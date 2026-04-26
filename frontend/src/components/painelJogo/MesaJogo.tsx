@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import type { EstadoJogo, CartaBaralho, OperacaoRealizada, StreakJogo } from '../../tipos/tipos';
+import React, { useState, useRef } from 'react';
+import { flushSync } from 'react-dom';
+import type { EstadoJogo, OperacaoRealizada, StreakJogo } from '../../tipos/tipos';
 import { jogoService } from '../../servicos/apiJogo';
 import { FilaCompra } from './FilaCompra';
 import { FundacaoPilha } from './FundacaoPilha';
@@ -7,7 +8,9 @@ import { ColunaTablau } from './ColunaTablau';
 
 interface MesaJogoProps {
   idSessao: string;
-  estadoInicial: EstadoJogo;
+  /** Única fonte de verdade: atualizada pelo Pai a partir do `estado_jogo` de cada resposta. */
+  estadoJogo: EstadoJogo;
+  onSincronizarEstado: (estado: EstadoJogo) => void;
   onOperacoesRealizadas: (ops: OperacaoRealizada[], streak?: StreakJogo) => void;
 }
 
@@ -16,14 +19,25 @@ type Origem =
   | { tipo: 'pilha'; naipe: string }
   | { tipo: 'lista'; indice: number; posicaoCorte: number };
 
-export const MesaJogo: React.FC<MesaJogoProps> = ({ idSessao, estadoInicial, onOperacoesRealizadas }) => {
-  const [estado, setEstado] = useState<EstadoJogo>(estadoInicial);
+export const MesaJogo: React.FC<MesaJogoProps> = ({
+  idSessao,
+  estadoJogo,
+  onSincronizarEstado,
+  onOperacoesRealizadas,
+}) => {
   const [origemSelecionada, setOrigemSelecionada] = useState<Origem | null>(null);
   const [loading, setLoading] = useState(false);
+  const emJogadaRef = useRef(false);
+  /**
+   * Uma fila de Promises por instância: múltiplas chamadas a `executarMovimento` (ex.: reentrada
+   * de evento antes de `setLoading` pintar) executam o POST em série — evita dois POSTs com o
+   * mesmo payload e 500/200 alternado no servidor.
+   */
+  const cadeiaMovimentoRef = useRef<Promise<unknown>>(Promise.resolve());
 
   const naipes = ['e', 'c', 'p', 'o']; // Espadas, Copas, Paus, Ouros
 
-  const executarMovimento = async (
+  const executarMovimento = (
     tipoMovimento: number,
     naipeDestino?: string,
     naipeOrigem?: string,
@@ -31,36 +45,49 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({ idSessao, estadoInicial, onO
     indiceListaDestino?: number,
     posicaoCorte?: number
   ) => {
-    setLoading(true);
-    try {
-      const result = await jogoService.moverCarta(
-        idSessao,
-        tipoMovimento,
-        naipeDestino,
-        naipeOrigem,
-        indiceListaOrigem,
-        indiceListaDestino,
-        posicaoCorte
-      );
-      
-      if (result.jogada_valida && result.estado_jogo) {
-        setEstado(result.estado_jogo);
-      } else if (!result.jogada_valida) {
-        console.warn("Jogada inválida:", result.motivo_rejeicao);
-        // Play error sound...
+    const p = cadeiaMovimentoRef.current.then(async () => {
+      emJogadaRef.current = true;
+      flushSync(() => {
+        setLoading(true);
+      });
+      try {
+        const result = await jogoService.moverCarta(idSessao, {
+          tipo_movimento: tipoMovimento,
+          naipe_destino: naipeDestino,
+          naipe_origem: naipeOrigem,
+          indice_lista_origem: indiceListaOrigem,
+          indice_lista_destino: indiceListaDestino,
+          posicao_corte: posicaoCorte,
+        });
+
+        if (result.estado_jogo) {
+          onSincronizarEstado(result.estado_jogo);
+        } else {
+          console.warn("Resposta /mover sem estado_jogo — UI pode ficar dessincronizada.");
+        }
+
+        if (!result.jogada_valida) {
+          console.warn("Jogada inválida:", result.motivo_rejeicao);
+        }
+
+        onOperacoesRealizadas(result.operacoes_realizadas, result.streak);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        emJogadaRef.current = false;
+        setLoading(false);
+        setOrigemSelecionada(null);
       }
-      
-      onOperacoesRealizadas(result.operacoes_realizadas, result.streak);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-      setOrigemSelecionada(null);
-    }
+    });
+    cadeiaMovimentoRef.current = p.then(
+      () => undefined,
+      () => undefined,
+    );
+    return p;
   };
 
   const handleFilaClick = () => {
-    if (loading) return;
+    if (loading || emJogadaRef.current) return;
     if (origemSelecionada && origemSelecionada.tipo === 'fila') {
       // Reposicionar
       executarMovimento(1);
@@ -71,10 +98,10 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({ idSessao, estadoInicial, onO
   };
 
   const handlePilhaClick = (naipe: string) => {
-    if (loading) return;
+    if (loading || emJogadaRef.current) return;
     if (!origemSelecionada) {
       // Se clica em uma pilha sem origem, selecionamos o topo da pilha
-      if (estado.estruturas.pilhas_fundacao[naipe].length > 0) {
+      if (estadoJogo.estruturas.pilhas_fundacao[naipe].length > 0) {
         setOrigemSelecionada({ tipo: 'pilha', naipe });
       }
     } else {
@@ -90,7 +117,7 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({ idSessao, estadoInicial, onO
   };
 
   const handleListaClick = (indiceDestino: number, posicaoCorte?: number) => {
-    if (loading) return;
+    if (loading || emJogadaRef.current) return;
     if (!origemSelecionada) {
       // Se não tem origem, selecionamos da lista (requer posicaoCorte)
       if (posicaoCorte !== undefined) {
@@ -116,8 +143,12 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({ idSessao, estadoInicial, onO
   const bgStyle = "bg-green-800 min-h-[600px] w-full p-6 rounded-xl shadow-inner relative";
 
   return (
-    <div className={bgStyle}>
-      {estado.jogo_vencido && (
+    <div
+      className={bgStyle}
+      style={{ pointerEvents: loading ? 'none' : 'auto' }}
+      aria-busy={loading}
+    >
+      {estadoJogo.jogo_vencido && (
         <div className="absolute inset-0 bg-black/60 z-50 flex items-center justify-center rounded-xl backdrop-blur-sm">
           <div className="text-center text-white">
             <h1 className="text-6xl font-bold mb-4 text-yellow-400 drop-shadow-lg">Você Venceu!</h1>
@@ -130,7 +161,7 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({ idSessao, estadoInicial, onO
       <div className="flex justify-between mb-12 h-32">
         <div className="flex items-start">
           <FilaCompra
-            fila={estado.estruturas.fila_compra}
+            fila={estadoJogo.estruturas.fila_compra}
             onCartaClick={handleFilaClick}
             selecionada={origemSelecionada?.tipo === 'fila'}
             destacada={false}
@@ -142,7 +173,7 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({ idSessao, estadoInicial, onO
             <FundacaoPilha
               key={naipe}
               naipe={naipe}
-              cartas={estado.estruturas.pilhas_fundacao[naipe]}
+              cartas={estadoJogo.estruturas.pilhas_fundacao[naipe]}
               onPilhaClick={() => handlePilhaClick(naipe)}
               destacada={false}
             />
@@ -152,7 +183,7 @@ export const MesaJogo: React.FC<MesaJogoProps> = ({ idSessao, estadoInicial, onO
 
       {/* Base: Tableau (Listas Ligadas) */}
       <div className="flex justify-between space-x-2">
-        {estado.estruturas.listas_tableau.map((coluna, index) => (
+        {estadoJogo.estruturas.listas_tableau.map((coluna, index) => (
           <ColunaTablau
             key={index}
             indice={index}

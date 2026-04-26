@@ -1,0 +1,610 @@
+[    9254ms] [WARNING] Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('https://www.google.com'). @ https://www.youtube.com/s/player/218d9d92/www-widgetapi.vflset/www-widgetapi.js:209
+[    9413ms] [INFO] Loading the script 'https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.CYE28xQTWxU.2021.O/am=AAAABA/d=1/br=1/rs=AGKMywGc21Bc99sDrhbnjOkQlq7nTfp_WQ/m=root,base' violates the following Content Security Policy directive: "script-src 'unsafe-inline'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://www.youtube.com/embed/?enablejsapi=1&rel=0&autoplay=0&playsinline=1&fs=1&hl=pt-BR&embed_config=%7B%22enc%22%3A%22AXH1ezlgSIsBwrfkqsslM-aCEr--1Vpjjd4hg9-_SZ0vaN_rVPNcQ38pHjCjDLc1oX9c53rvKL6tF50kdcDM8RyvTWhzgZCVjc5A5z8omHDSdw-KUCrnn51OhltaFWd22s4aYcixsSqnPETZwTHrTRqqDLqjnaoNZCjK-UdrcZNZkv6iaDnNYwUsC5RaD_NlBdOcz9WqKObQ7vNo93VgY0u7vtoGiVqpJ4aDWx0SOJVcLeSU2zzT3dbOEJgIZlEIvkWut7mz0N-nt8STIr-B1Qvhgg75hIiS7xP3dqtG7NNxo0CZ7ZqsUqwhKpdbT7kzit0S4l5z98Qg%22%7D:0
+[    9446ms] [INFO] Loading the script 'https://www.youtube.com/s/player/218d9d92/player_embed_es6.vflset/pt_BR/base.js' violates the following Content Security Policy directive: "script-src 'unsafe-inline'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://www.youtube.com/embed/?enablejsapi=1&rel=0&autoplay=0&playsinline=1&fs=1&hl=pt-BR&embed_config=%7B%22enc%22%3A%22AXH1ezlgSIsBwrfkqsslM-aCEr--1Vpjjd4hg9-_SZ0vaN_rVPNcQ38pHjCjDLc1oX9c53rvKL6tF50kdcDM8RyvTWhzgZCVjc5A5z8omHDSdw-KUCrnn51OhltaFWd22s4aYcixsSqnPETZwTHrTRqqDLqjnaoNZCjK-UdrcZNZkv6iaDnNYwUsC5RaD_NlBdOcz9WqKObQ7vNo93VgY0u7vtoGiVqpJ4aDWx0SOJVcLeSU2zzT3dbOEJgIZlEIvkWut7mz0N-nt8STIr-B1Qvhgg75hIiS7xP3dqtG7NNxo0CZ7ZqsUqwhKpdbT7kzit0S4l5z98Qg%22%7D:0
+[    9464ms] [INFO] Loading the script 'https://static.doubleclick.net/instream/ad_status.js' violates the following Content Security Policy directive: "script-src 'unsafe-inline'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.CYE28xQTWxU.2021.O/am=AAAABA/d=1/br=1/rs=AGKMywGc21Bc99sDrhbnjOkQlq7nTfp_WQ/m=root,base:1312
+[    9467ms] [INFO] Loading the script 'https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.CYE28xQTWxU.2021.O/am=AAAABA/d=1/exm=base,root/ed=1/br=1/rs=AGKMywGc21Bc99sDrhbnjOkQlq7nTfp_WQ/m=r78Drb' violates the following Content Security Policy directive: "script-src 'unsafe-inline'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.CYE28xQTWxU.2021.O/am=AAAABA/d=1/br=1/rs=AGKMywGc21Bc99sDrhbnjOkQlq7nTfp_WQ/m=root,base:157
+[    9976ms] [INFO] Loading the script 'https://www.google.com/js/th/cN4AN9hxcU4NRvji1RMUfz3eri06TDMd9Q_fvSbDV9Q.js' violates the following Content Security Policy directive: "script-src 'unsafe-inline'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://www.youtube.com/s/_/ytembeds/_/js/k=ytembeds.base.en_US.CYE28xQTWxU.2021.O/am=AAAABA/d=1/br=1/rs=AGKMywGc21Bc99sDrhbnjOkQlq7nTfp_WQ/m=root,base:1347
+[   10052ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ https://www.google.com/js/th/cN4AN9hxcU4NRvji1RMUfz3eri06TDMd9Q_fvSbDV9Q.js:1
+[   10052ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ https://www.google.com/js/th/cN4AN9hxcU4NRvji1RMUfz3eri06TDMd9Q_fvSbDV9Q.js:1
+[   10056ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10061ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10062ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10062ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10067ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10067ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10067ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10068ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10068ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10068ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10068ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10068ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10068ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10069ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10069ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10069ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10069ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10069ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10069ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10070ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10071ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10072ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :5013
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10073ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10074ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10074ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10074ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10074ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10074ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10074ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10074ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10101ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10101ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10101ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10101ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10101ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10102ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10103ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10104ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10105ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10105ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10105ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10105ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10125ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10125ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10126ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10126ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10126ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10126ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10126ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10126ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10126ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10126ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10127ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10128ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10145ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10146ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10146ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10146ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10146ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10146ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10146ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10146ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10147ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10147ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10147ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10147ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10147ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10147ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10147ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10147ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10147ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10148ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10148ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10153ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10154ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10155ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10156ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10160ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10160ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10160ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10160ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10160ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10161ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10161ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10161ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10161ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10161ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10161ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10161ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10162ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10163ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10166ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10166ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10166ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10166ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10166ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10166ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10167ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10167ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10167ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10168ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10168ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10168ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10169ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10169ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10169ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10170ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   10171ms] [INFO] Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: "script-src 'unsafe-inline'".
+ The policy is report-only, so the violation has been logged but no further action has been taken. @ :0
+[   29531ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://ups.analytics.yahoo.com/ups/58835/fed?v=1&1p=0&gdpr=0&gdpr_consent=&us_privacy=&url=https://www.paciencia.co/blog/como-jogar-paciencia&pixelId=58835:0
+[   29594ms] [ERROR] Access to fetch at 'https://api.rlcdn.com/api/identity/envelope?pid=13926' from origin 'https://www.paciencia.co' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://www.paciencia.co/blog/como-jogar-paciencia:0
+[   29594ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://api.rlcdn.com/api/identity/envelope?pid=13926:0
+[   31954ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   31972ms] [ERROR] Failed to load resource: the server responded with a status of 451 () @ https://idsync.rlcdn.com/420486.gif?partner_uid=48ADF8F5-992C-450F-8D11-142E968ADF82:0
+[   31954ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   34654ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   31972ms] [ERROR] Failed to load resource: the server responded with a status of 451 () @ https://idsync.rlcdn.com/420486.gif?partner_uid=48ADF8F5-992C-450F-8D11-142E968ADF82:0
+[   35827ms] [ERROR] Failed to load resource: the server responded with a status of 451 () @ https://id.rlcdn.com/464246.gif?partner_uid=bd526541-cab4-47c2-babd-a8244ac52edc:0
+[   31954ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   34654ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   62133ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   62409ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ https://cpm.vistarsagency.com/user-sync?zone=354281%20&t=image&r=https://image2.pubmatic.com/AdServer/Pug?vcode=bz0yJnR5cGU9MSZjb2RlPTQxNTcmdGw9MTI5NjAw&piggybackCookie={UID}&gdpr=0&gdpr_consent=&us_privacy=&gpp=&gpp_sid=&ccpa=[CCPA]:0
+[   62409ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ https://cpm.vistarsagency.com/user-sync?zone=354281%20&t=image&r=https://image2.pubmatic.com/AdServer/Pug?vcode=bz0yJnR5cGU9MSZjb2RlPTQxNTcmdGw9MTI5NjAw&piggybackCookie={UID}&gdpr=0&gdpr_consent=&us_privacy=&gpp=&gpp_sid=&ccpa=[CCPA]:0
+[   62585ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://bidserver.pacvue.com/tracking/user/sync/pubmatic-adx&gdpr=0&gdpr_consent=&us_privacy=&gpp=&gpp_sid=&ccpa=[CCPA]:0
+[   31954ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   34654ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   62133ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   64821ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   31954ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   34654ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   62133ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   64821ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   92121ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   31954ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   34654ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   62133ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   64821ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   92121ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0
+[   94816ms] [ERROR] Refused to display 'https://s2s.teamunwind.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'. @ chrome-error://chromewebdata/:0

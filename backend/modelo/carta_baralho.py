@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Final
+from typing import Any, Final
 
 from modelo.excecao_carta import CartaInvalidaError
 
@@ -63,6 +63,22 @@ class CartaBaralho:
         if self.naipe_carta in ("c", "o"):
             return "vermelha"
         return "preta"
+
+    def para_dicionario_json(self) -> dict[str, Any]:
+        """Mapeia a carta para dicionário JSON (API e `operacoes_realizadas`).
+
+        Carta virada para baixo não expõe número ou naipe; alinha com
+        :meth:`EstadoJogo.serializar` para o board.
+        """
+        if not self.status_carta:
+            return {"status_carta": False, "texto": "verso"}
+        return {
+            "numero_carta": self.numero_carta,
+            "naipe_carta": self.naipe_carta,
+            "status_carta": True,
+            "texto": self.texto_carta(),
+            "cor": self.cor_carta(),
+        }
 
     def texto_carta(self) -> str:
         """Representação curta legível: número + símbolo do naipe Unicode.

@@ -12,6 +12,17 @@ from motor.estado_jogo import EstadoJogo
 from motor import regras_movimento
 
 
+def _rejeitar_por_estrutura_inconsistente(estado: EstadoJogo, motivo: str) -> dict[str, Any]:
+    """Operação de estrutura (fila/pilha/lista) não devolveu carta após regras OK — ex. corrida rara."""
+    streak = atualizar_streak(estado, False, [])
+    return {
+        "jogada_valida": False,
+        "motivo_rejeicao": motivo,
+        "streak": streak,
+        "operacoes_realizadas": [],
+    }
+
+
 def distribuir_cartas_novo_jogo(estado: EstadoJogo) -> list[dict[str, Any]]:
     """Cria, embaralha e distribui as cartas. Retorna log de preparação."""
     log_preparacao: list[dict[str, Any]] = []
@@ -64,17 +75,23 @@ def _virar_carta_lista(lista: ListaLigadaCartas) -> list[dict[str, Any]]:
     passos: list[dict[str, Any]] = []
     if lista.esta_vazia():
         return passos
-        
+
     resultado_ultima = lista.obter_ultima_carta(registrar_passos=False)
-    ultima: CartaBaralho = resultado_ultima["valor_retornado"]
-    
+    if not resultado_ultima.get("operacao_sucesso"):
+        return passos
+    ultima = resultado_ultima.get("valor_retornado")
+    if not isinstance(ultima, CartaBaralho):
+        return passos
+
     if not ultima.status_carta:
         ultima.status_carta = True
-        passos.append({
-            "passo_numero": 1,
-            "pseudo_codigo": "última_carta.status ← True",
-            "descricao_acao": f"Revelou carta na {lista.nome_lista}: {ultima.texto_carta()}"
-        })
+        passos.append(
+            {
+                "passo_numero": 1,
+                "pseudo_codigo": "última_carta.status ← True",
+                "descricao_acao": f"Revelou carta na {lista.nome_lista}: {ultima.texto_carta()}",
+            }
+        )
     return passos
 
 
@@ -124,7 +141,7 @@ def executar_fila_para_fila(estado: EstadoJogo) -> dict[str, Any]:
     resultado = estado.fila_compra.reposicionar_frente(registrar_passos=True)
     if not resultado["operacao_sucesso"]:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": "Fila vazia", "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": "Fila vazia", "streak": streak, "operacoes_realizadas": []}
         
     streak = atualizar_streak(estado, True, ["Fila (FIFO)"])
     return {
@@ -138,14 +155,20 @@ def executar_fila_para_pilha(estado: EstadoJogo, naipe_destino: str) -> dict[str
     pilha = estado.pilhas_fundacao.get(naipe_destino)
     if not pilha:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": "Pilha inválida", "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": "Pilha inválida", "streak": streak, "operacoes_realizadas": []}
         
     valido, motivo = regras_movimento.validar_fila_para_pilha(estado.fila_compra, pilha)
     if not valido:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes_realizadas": []}
         
     res_fila = estado.fila_compra.desenfileirar(registrar_passos=True)
+    if not res_fila.get("operacao_sucesso") or not isinstance(
+        res_fila.get("valor_retornado"), CartaBaralho
+    ):
+        return _rejeitar_por_estrutura_inconsistente(
+            estado, "Fila vazia ao retirar a carta; atualize o estado e tente de novo."
+        )
     carta = res_fila["valor_retornado"]
     res_pilha = pilha.empilhar(carta, registrar_passos=True)
     
@@ -164,15 +187,21 @@ def executar_fila_para_pilha(estado: EstadoJogo, naipe_destino: str) -> dict[str
 def executar_fila_para_lista(estado: EstadoJogo, indice_lista: int) -> dict[str, Any]:
     if indice_lista < 0 or indice_lista > 6:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": "Lista inválida", "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": "Lista inválida", "streak": streak, "operacoes_realizadas": []}
         
     lista = estado.listas_tableau[indice_lista]
     valido, motivo = regras_movimento.validar_fila_para_lista(estado.fila_compra, lista)
     if not valido:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes_realizadas": []}
         
     res_fila = estado.fila_compra.desenfileirar(registrar_passos=True)
+    if not res_fila.get("operacao_sucesso") or not isinstance(
+        res_fila.get("valor_retornado"), CartaBaralho
+    ):
+        return _rejeitar_por_estrutura_inconsistente(
+            estado, "Fila vazia ao retirar a carta; atualize o estado e tente de novo."
+        )
     carta = res_fila["valor_retornado"]
     res_lista = lista.inserir_final(carta, registrar_passos=True)
     
@@ -188,15 +217,21 @@ def executar_pilha_para_lista(estado: EstadoJogo, naipe_origem: str, indice_list
     pilha = estado.pilhas_fundacao.get(naipe_origem)
     if not pilha or indice_lista < 0 or indice_lista > 6:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": "Pilha ou lista inválida", "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": "Pilha ou lista inválida", "streak": streak, "operacoes_realizadas": []}
         
     lista = estado.listas_tableau[indice_lista]
     valido, motivo = regras_movimento.validar_pilha_para_lista(pilha, lista)
     if not valido:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes_realizadas": []}
         
     res_pilha = pilha.desempilhar(registrar_passos=True)
+    if not res_pilha.get("operacao_sucesso") or not isinstance(
+        res_pilha.get("valor_retornado"), CartaBaralho
+    ):
+        return _rejeitar_por_estrutura_inconsistente(
+            estado, "Pilha vazia ao retirar a carta; atualize o estado e tente de novo."
+        )
     carta = res_pilha["valor_retornado"]
     res_lista = lista.inserir_final(carta, registrar_passos=True)
     
@@ -212,15 +247,21 @@ def executar_lista_para_pilha(estado: EstadoJogo, indice_lista: int, naipe_desti
     pilha = estado.pilhas_fundacao.get(naipe_destino)
     if not pilha or indice_lista < 0 or indice_lista > 6:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": "Pilha ou lista inválida", "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": "Pilha ou lista inválida", "streak": streak, "operacoes_realizadas": []}
         
     lista = estado.listas_tableau[indice_lista]
     valido, motivo = regras_movimento.validar_lista_para_pilha(lista, pilha)
     if not valido:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes_realizadas": []}
         
     res_lista = lista.remover_final(registrar_passos=True)
+    if not res_lista.get("operacao_sucesso") or not isinstance(
+        res_lista.get("valor_retornado"), CartaBaralho
+    ):
+        return _rejeitar_por_estrutura_inconsistente(
+            estado, "Lista vazia ao retirar a carta; atualize o estado e tente de novo."
+        )
     carta = res_lista["valor_retornado"]
     res_pilha = pilha.empilhar(carta, registrar_passos=True)
     
@@ -251,11 +292,11 @@ def executar_lista_para_pilha(estado: EstadoJogo, indice_lista: int, naipe_desti
 def executar_lista_para_lista(estado: EstadoJogo, indice_origem: int, posicao_corte: int, indice_destino: int) -> dict[str, Any]:
     if indice_origem < 0 or indice_origem > 6 or indice_destino < 0 or indice_destino > 6:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": "Listas inválidas", "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": "Listas inválidas", "streak": streak, "operacoes_realizadas": []}
         
     if indice_origem == indice_destino:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": "Origem e destino iguais", "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": "Origem e destino iguais", "streak": streak, "operacoes_realizadas": []}
         
     lista_orig = estado.listas_tableau[indice_origem]
     lista_dest = estado.listas_tableau[indice_destino]
@@ -263,11 +304,22 @@ def executar_lista_para_lista(estado: EstadoJogo, indice_origem: int, posicao_co
     valido, motivo = regras_movimento.validar_lista_para_lista(lista_orig, posicao_corte, lista_dest)
     if not valido:
         streak = atualizar_streak(estado, False, [])
-        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes": []}
+        return {"jogada_valida": False, "motivo_rejeicao": motivo, "streak": streak, "operacoes_realizadas": []}
         
     res_lista_orig = lista_orig.remover_a_partir_de(posicao_corte, registrar_passos=True)
+    if not res_lista_orig.get("operacao_sucesso"):
+        cartas_falha = res_lista_orig.get("valor_retornado")
+        streak = atualizar_streak(estado, False, [])
+        detalhe = "Falha ao remover sublista no tableau."
+        if cartas_falha is None:
+            detalhe = "Remoção no tableau não retornou cartas; índice de corte inconsistente."
+        return {
+            "jogada_valida": False,
+            "motivo_rejeicao": detalhe,
+            "streak": streak,
+            "operacoes_realizadas": [],
+        }
     cartas_removidas = res_lista_orig["valor_retornado"]
-    
     operacoes = [res_lista_orig]
     
     # Insere as cartas na nova lista preservando a ordem

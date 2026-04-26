@@ -1,12 +1,16 @@
 """Rotas para o motor do jogo Paciência."""
 
-from fastapi import APIRouter, HTTPException, Path, Query
+from fastapi import APIRouter, HTTPException, Path, Query, Request
+from fastapi.encoders import jsonable_encoder
 from typing import Any
 
 from api.gerenciador_sessoes import obter_estado, salvar_estado
+from api.locks_jogo import lock_motor_sessao
+from api.erro_500 import logar_500
+from api.serializacao_resposta import sanitizar_motor_para_json
 from motor.estado_jogo import EstadoJogo
 from motor import controlador_jogo
-from api.schemas import RequestMoverCarta, ResponseNovoJogo, ResponsePadraoOperacao
+from api.schemas import RequestMoverCarta, ResponseNovoJogo
 
 rotas_jogo = APIRouter()
 
@@ -31,8 +35,8 @@ def criar_novo_jogo(
         "estado_jogo": estado_novo.serializar(),
     }
     if log_detalhado:
-        resposta["log_preparacao"] = log_preparacao
-        
+        resposta["log_preparacao"] = sanitizar_motor_para_json(log_preparacao)
+
     return resposta
 
 
@@ -53,61 +57,116 @@ def consultar_estado_jogo(
 
 @rotas_jogo.post(
     "/{id_sessao}/mover",
-    response_model=ResponsePadraoOperacao,
     summary="Realizar jogada",
-    description="Recebe o tipo do movimento e seus parâmetros, valida e executa nas estruturas."
+    description=(
+        "Recebe o tipo do movimento e seus parâmetros, valida e executa nas estruturas. "
+        "Sem `response_model`: a validação de resposta do Pydantic v2 gerava 500 em alguns "
+        "movimentos (árvore aninhada) e o terminal do Uvicorn nem sempre mostrava o traceback."
+    ),
 )
 def mover_carta(
     requisicao: RequestMoverCarta,
+    request: Request,
     id_sessao: str = Path(..., description="UUID da sessão do jogo")
 ) -> dict[str, Any]:
-    estado = obter_estado(id_sessao)
-    if not estado:
-        raise HTTPException(status_code=404, detail="Sessão não encontrada ou expirada.")
-        
-    resultado_movimento: dict[str, Any] = {}
-    
-    if requisicao.tipo_movimento == 1:
-        # Fila -> Fila
-        resultado_movimento = controlador_jogo.executar_fila_para_fila(estado)
-        
-    elif requisicao.tipo_movimento == 2:
-        # Fila -> Pilha
-        if requisicao.naipe_destino is None:
-            raise HTTPException(status_code=400, detail="naipe_destino é obrigatório para este movimento.")
-        resultado_movimento = controlador_jogo.executar_fila_para_pilha(estado, requisicao.naipe_destino)
-        
-    elif requisicao.tipo_movimento == 3:
-        # Fila -> Lista
-        if requisicao.indice_lista_destino is None:
-            raise HTTPException(status_code=400, detail="indice_lista_destino é obrigatório para este movimento.")
-        resultado_movimento = controlador_jogo.executar_fila_para_lista(estado, requisicao.indice_lista_destino)
-        
-    elif requisicao.tipo_movimento == 4:
-        # Pilha -> Lista
-        if requisicao.naipe_origem is None or requisicao.indice_lista_destino is None:
-            raise HTTPException(status_code=400, detail="naipe_origem e indice_lista_destino são obrigatórios.")
-        resultado_movimento = controlador_jogo.executar_pilha_para_lista(estado, requisicao.naipe_origem, requisicao.indice_lista_destino)
-        
-    elif requisicao.tipo_movimento == 5:
-        # Lista -> Pilha
-        if requisicao.indice_lista_origem is None or requisicao.naipe_destino is None:
-            raise HTTPException(status_code=400, detail="indice_lista_origem e naipe_destino são obrigatórios.")
-        resultado_movimento = controlador_jogo.executar_lista_para_pilha(estado, requisicao.indice_lista_origem, requisicao.naipe_destino)
-        
-    elif requisicao.tipo_movimento == 6:
-        # Lista -> Lista
-        if requisicao.indice_lista_origem is None or requisicao.indice_lista_destino is None or requisicao.posicao_corte is None:
-            raise HTTPException(status_code=400, detail="índices de listas origem/destino e posicao_corte são obrigatórios.")
-        resultado_movimento = controlador_jogo.executar_lista_para_lista(estado, requisicao.indice_lista_origem, requisicao.posicao_corte, requisicao.indice_lista_destino)
-        
-    else:
-        raise HTTPException(status_code=400, detail="tipo_movimento inválido.")
-        
-    # Anexar estado atualizado na resposta se o movimento foi válido (ou até inválido para sincronizar)
-    resultado_movimento["estado_jogo"] = estado.serializar()
-    
-    return resultado_movimento
+    with lock_motor_sessao(id_sessao):
+        estado = obter_estado(id_sessao)
+        if not estado:
+            raise HTTPException(status_code=404, detail="Sessão não encontrada ou expirada.")
+
+        resultado_movimento: dict[str, Any] = {}
+
+        if requisicao.tipo_movimento == 1:
+            # Fila -> Fila
+            resultado_movimento = controlador_jogo.executar_fila_para_fila(estado)
+
+        elif requisicao.tipo_movimento == 2:
+            # Fila -> Pilha
+            if requisicao.naipe_destino is None:
+                raise HTTPException(
+                    status_code=400, detail="naipe_destino é obrigatório para este movimento."
+                )
+            resultado_movimento = controlador_jogo.executar_fila_para_pilha(
+                estado, requisicao.naipe_destino
+            )
+
+        elif requisicao.tipo_movimento == 3:
+            # Fila -> Lista
+            if requisicao.indice_lista_destino is None:
+                raise HTTPException(
+                    status_code=400,
+                    detail="indice_lista_destino é obrigatório para este movimento.",
+                )
+            resultado_movimento = controlador_jogo.executar_fila_para_lista(
+                estado, requisicao.indice_lista_destino
+            )
+
+        elif requisicao.tipo_movimento == 4:
+            # Pilha -> Lista
+            if requisicao.naipe_origem is None or requisicao.indice_lista_destino is None:
+                raise HTTPException(
+                    status_code=400, detail="naipe_origem e indice_lista_destino são obrigatórios."
+                )
+            resultado_movimento = controlador_jogo.executar_pilha_para_lista(
+                estado, requisicao.naipe_origem, requisicao.indice_lista_destino
+            )
+
+        elif requisicao.tipo_movimento == 5:
+            # Lista -> Pilha
+            if requisicao.indice_lista_origem is None or requisicao.naipe_destino is None:
+                raise HTTPException(
+                    status_code=400,
+                    detail="indice_lista_origem e naipe_destino são obrigatórios.",
+                )
+            resultado_movimento = controlador_jogo.executar_lista_para_pilha(
+                estado, requisicao.indice_lista_origem, requisicao.naipe_destino
+            )
+
+        elif requisicao.tipo_movimento == 6:
+            # Lista -> Lista
+            if (
+                requisicao.indice_lista_origem is None
+                or requisicao.indice_lista_destino is None
+                or requisicao.posicao_corte is None
+            ):
+                raise HTTPException(
+                    status_code=400,
+                    detail="índices de listas origem/destino e posicao_corte são obrigatórios.",
+                )
+            resultado_movimento = controlador_jogo.executar_lista_para_lista(
+                estado,
+                requisicao.indice_lista_origem,
+                requisicao.posicao_corte,
+                requisicao.indice_lista_destino,
+            )
+
+        else:
+            raise HTTPException(status_code=400, detail="tipo_movimento inválido.")
+
+        salvar_estado(estado)
+
+        # Estado tabuleiro (JSON seguro); se `sanitizar` falhar nos logs, ainda devolvemos 200 + estado.
+        try:
+            estado_serial = estado.serializar()
+        except Exception as exc:
+            logar_500(exc, request=request, contexto="mover:estado.serializar")
+            raise HTTPException(status_code=500, detail="Falha ao serializar o estado do jogo.") from exc
+
+        resultado_movimento["estado_jogo"] = estado_serial
+        try:
+            return sanitizar_motor_para_json(resultado_movimento)
+        except Exception as exc:
+            logar_500(exc, request=request, contexto="mover:sanitizar_motor_para_json")
+            return jsonable_encoder(
+                {
+                    "jogada_valida": bool(resultado_movimento.get("jogada_valida")),
+                    "motivo_rejeicao": resultado_movimento.get("motivo_rejeicao"),
+                    "operacoes_realizadas": [],
+                    "streak": resultado_movimento.get("streak"),
+                    "estado_jogo": estado_serial,
+                    "aviso": "Jogada aplicada; log de operações omitido por falha na serialização.",
+                }
+            )
 
 
 @rotas_jogo.get(

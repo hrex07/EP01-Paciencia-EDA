@@ -1,0 +1,41 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: P
+      - heading "Paciência Educacional" [level=1] [ref=e7]
+    - generic [ref=e8]:
+      - button "Novo Jogo" [ref=e9]:
+        - img [ref=e10]
+        - generic [ref=e12]: Novo Jogo
+      - button "Estatísticas" [ref=e14]:
+        - img [ref=e15]
+      - button "Mudo" [ref=e16]:
+        - img [ref=e17]
+      - button "Painel Educacional" [ref=e21]:
+        - img [ref=e22]
+  - main [ref=e23]:
+    - generic [ref=e25]:
+      - generic [ref=e27]: ♠
+      - heading "Bem-vindo ao Paciência Educacional" [level=2] [ref=e28]
+      - paragraph [ref=e29]: Aprenda Estruturas de Dados e Análise de Algoritmos na prática. Jogue Solitaire e visualize Pilhas, Filas e Listas Ligadas em tempo real.
+      - button "Iniciar Partida" [ref=e30]
+    - complementary [ref=e31]:
+      - generic [ref=e32]:
+        - button "Estruturas de Dados" [ref=e33]
+        - button "Algoritmos" [ref=e34]
+      - generic [ref=e35]:
+        - heading "Visão Geral" [level=3] [ref=e37]
+        - generic [ref=e39]:
+          - img [ref=e41]
+          - text: Nenhuma operação selecionada.
+        - generic [ref=e45]:
+          - generic [ref=e47]: Selecione uma operação no log para inspecionar.
+          - generic [ref=e49]:
+            - generic [ref=e50]:
+              - heading "Log de Operações" [level=3] [ref=e51]
+              - combobox [ref=e52]:
+                - option "Todas" [selected]
+                - option "Pilhas"
+                - option "Fila"
+                - option "Listas Ligadas"
+            - generic [ref=e54]: Nenhuma operação registrada ainda.

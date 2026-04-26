@@ -32,13 +32,15 @@ export const ColunaTablau: React.FC<ColunaTablauProps> = ({
         />
       ) : (
         <div className="relative">
+          {/** API `listas_tableau[coluna]`: index 0 = cabeça (topo visual), index length-1 = base (face-up tip.) */}
           {cartas.map((carta, index) => {
             const isSelecionada = indiceSelecionada === index;
             // Se esta carta ou alguma abaixo dela está selecionada, ela sobe junto (visual de "bloco" ou sublista)
             const fazParteDaSelecao = indiceSelecionada !== null && index >= indiceSelecionada;
             
-            // Distância vertical para cascata
-            const topOffset = index * 24;
+            // Passo da cascata: maior = faixa "desbloqueada" sem sobreposição mais larga
+            // (evita hit-test na carta errada: z-index cresce com o índice).
+            const topOffset = index * 36;
 
             return (
               <div
@@ -56,7 +58,13 @@ export const ColunaTablau: React.FC<ColunaTablauProps> = ({
                 <CartaVisual
                   carta={carta}
                   selecionada={isSelecionada}
-                  onClick={() => carta.status_carta ? onCartaClick(index) : undefined}
+                  dataCartaIndice={index}
+                  dataColunaIndice={indice}
+                  onClick={
+                    carta.status_carta
+                      ? () => onCartaClick(index)
+                      : undefined
+                  }
                 />
               </div>
             );

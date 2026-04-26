@@ -57,12 +57,12 @@ Abra um terminal e acesse a pasta `backend`:
 cd backend
 
 # Recomenda-se criar um ambiente virtual (venv)
-python -m venv venv
+python -m venv .venv
 
 # Ativar no Windows:
-venv\Scripts\activate
+.venv\Scripts\activate
 # Ativar no Linux/Mac:
-source venv/bin/activate
+source .venv/bin/activate
 
 # Instalar dependências
 pip install -e ".[dev]"

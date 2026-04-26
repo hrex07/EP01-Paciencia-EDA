@@ -3,6 +3,7 @@
 import uuid
 from typing import Any
 
+from modelo.carta_baralho import CartaBaralho
 from modelo.fila_cartas import FilaCartas
 from modelo.lista_ligada_cartas import ListaLigadaCartas
 from modelo.pilha_cartas import PilhaCartas
@@ -49,15 +50,9 @@ class EstadoJogo:
         Cartas viradas para baixo não expõem seu número ou naipe.
         """
         def _serializar_carta(carta) -> dict[str, Any]:
-            if not carta.status_carta:
-                return {"status_carta": False, "texto": "verso"}
-            return {
-                "numero_carta": carta.numero_carta,
-                "naipe_carta": carta.naipe_carta,
-                "status_carta": True,
-                "texto": carta.texto_carta(),
-                "cor": carta.cor_carta(),
-            }
+            if carta is None or not isinstance(carta, CartaBaralho):
+                return {"status_carta": False, "texto": "carta indisponível", "erro_dominio": True}
+            return carta.para_dicionario_json()
 
         # Serializando a fila
         fila_cartas = []

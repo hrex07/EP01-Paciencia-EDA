@@ -45,6 +45,23 @@ export interface EstadoJogo {
   estruturas: EstruturasJogo;
 }
 
+/** Corpo de POST /jogo/{id}/mover — espelha `api.schemas.RequestMoverCarta`. */
+export interface RequestMoverCarta {
+  tipo_movimento: number;
+  naipe_destino?: string;
+  naipe_origem?: string;
+  indice_lista_origem?: number;
+  indice_lista_destino?: number;
+  posicao_corte?: number;
+}
+
+/** Carta na API de algoritmos/estruturas — espelha `api.schemas.CartaEntrada`. */
+export interface CartaEntrada {
+  numero_carta: number;
+  naipe_carta: string;
+  status_carta?: boolean;
+}
+
 export interface ResponseNovoJogo {
   id_sessao: string;
   estado_jogo: EstadoJogo;
