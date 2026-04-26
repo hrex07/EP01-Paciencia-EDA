@@ -31,16 +31,32 @@ class FilaCartas:
         self.quantidade_elementos = 0
 
     def esta_vazia(self) -> bool:
-        """Verifica se a fila não possui elementos."""
+        """Verifica se a fila não possui elementos.
+
+        Returns:
+            ``True`` se ``no_frente`` for ``None``.
+        """
         return self.no_frente is None
 
     def obter_tamanho(self) -> int:
-        """Retorna quantidade de cartas enfileiradas."""
+        """Retorna quantidade de cartas enfileiradas.
+
+        Returns:
+            Valor de ``quantidade_elementos``.
+        """
         return self.quantidade_elementos
 
     @staticmethod
     def desserializar(dados_lista: list[dict[str, Any]], nome_fila: str) -> FilaCartas:
-        """Recria uma instância de FilaCartas a partir de uma lista de dicionários de cartas."""
+        """Reconstrói a fila a partir de cartas em ordem cabeça → final.
+
+        Args:
+            dados_lista: Cartas completas serializadas.
+            nome_fila: Nome lógico da fila.
+
+        Returns:
+            ``FilaCartas`` preenchida por enfileiramentos silenciosos.
+        """
         fila = FilaCartas(nome_fila=nome_fila)
         for d_carta in dados_lista:
             carta = CartaBaralho.desserializar(d_carta)
@@ -141,7 +157,14 @@ class FilaCartas:
         }
 
     def desenfileirar(self, *, registrar_passos: bool = True) -> dict[str, Any]:
-        """Remove carta da frente da fila (dequeue)."""
+        """Remove carta da frente da fila (dequeue).
+
+        Args:
+            registrar_passos: Se inclui narrativa passo a passo.
+
+        Returns:
+            Resultado-padrão com ``valor_retornado`` = ``CartaBaralho`` em sucesso.
+        """
         lista_passos: list[dict[str, Any]] = []
         numero_passo = 0
 
@@ -221,7 +244,14 @@ class FilaCartas:
         }
 
     def espiar_frente(self, *, registrar_passos: bool = True) -> dict[str, Any]:
-        """Consulta a carta da frente sem remover (peek)."""
+        """Consulta a carta da frente sem remover (peek).
+
+        Args:
+            registrar_passos: Se inclui passo didático.
+
+        Returns:
+            Resultado-padrão com ``valor_retornado`` em sucesso.
+        """
         lista_passos: list[dict[str, Any]] = []
         if self.no_frente is None:
             lista_passos.append(
@@ -338,7 +368,14 @@ class FilaCartas:
 
 
 def _renumerar_passos(lista_passos: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Atribui passo_numero sequencial a partir de 1."""
+    """Atribui ``passo_numero`` sequencial (1-based) a cada entrada da lista.
+
+    Args:
+        lista_passos: Passos possivelmente com numeração inconsistente.
+
+    Returns:
+        Nova lista de dicts com ``passo_numero`` redefinido em ordem.
+    """
     resultado: list[dict[str, Any]] = []
     for indice, passo in enumerate(lista_passos, start=1):
         copia = dict(passo)

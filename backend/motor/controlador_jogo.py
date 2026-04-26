@@ -13,7 +13,19 @@ from motor import regras_movimento
 
 
 def _rejeitar_por_estrutura_inconsistente(estado: EstadoJogo, motivo: str) -> dict[str, Any]:
-    """Operação de estrutura (fila/pilha/lista) não devolveu carta após regras OK — ex. corrida rara."""
+    """Monta resposta de jogada inválida quando a estrutura falha após validação.
+
+    Cobre casos raros de corrida ou estado inconsistente (ex.: fila lida como
+    não vazia e esvaziada por outro pedido antes do ``desenfileirar``).
+
+    Args:
+        estado: Partida atual (para atualizar streak).
+        motivo: Mensagem explicativa para o cliente.
+
+    Returns:
+        Dict com ``jogada_valida`` falso, ``motivo_rejeicao``, ``streak`` e
+        ``operacoes_realizadas`` vazia.
+    """
     streak = atualizar_streak(estado, False, [])
     return {
         "jogada_valida": False,
@@ -24,7 +36,15 @@ def _rejeitar_por_estrutura_inconsistente(estado: EstadoJogo, motivo: str) -> di
 
 
 def distribuir_cartas_novo_jogo(estado: EstadoJogo) -> list[dict[str, Any]]:
-    """Cria, embaralha e distribui as cartas. Retorna log de preparação."""
+    """Cria baralho, embaralha e distribui as cartas nas sete colunas e na fila.
+
+    Args:
+        estado: Partida mutada in-place (listas e fila preenchidas).
+
+    Returns:
+        Lista plana de passos didáticos (``passo_numero``, ``pseudo_codigo``,
+        ``descricao_acao``) acumulados de todas as operações de preparação.
+    """
     log_preparacao: list[dict[str, Any]] = []
 
     resultado_baralho = criar_baralho_completo(registrar_passos=True)
@@ -71,7 +91,14 @@ def distribuir_cartas_novo_jogo(estado: EstadoJogo) -> list[dict[str, Any]]:
 
 
 def _virar_carta_lista(lista: ListaLigadaCartas) -> list[dict[str, Any]]:
-    """Vira a última carta da lista se estiver virada para baixo."""
+    """Revela a última carta da coluna (Klondike) se estiver com face para baixo.
+
+    Args:
+        lista: Coluna do tableau.
+
+    Returns:
+        Lista de passos narrados (pode ser vazia se lista vazia ou carta já virada).
+    """
     passos: list[dict[str, Any]] = []
     if lista.esta_vazia():
         return passos
@@ -96,6 +123,17 @@ def _virar_carta_lista(lista: ListaLigadaCartas) -> list[dict[str, Any]]:
 
 
 def atualizar_streak(estado: EstadoJogo, jogada_valida: bool, estruturas_usadas: list[str]) -> dict[str, Any]:
+    """Atualiza contadores de sequência e devolve feedback educacional.
+
+    Args:
+        estado: Partida (campos ``sequencia_atual``, ``total_jogadas``, etc.).
+        jogada_valida: Se a jogada aplicada foi aceita pelo motor.
+        estruturas_usadas: Nomes didáticos das estruturas envolvidas (para a mensagem).
+
+    Returns:
+        Dict com ``sequencia_atual``, ``maior_sequencia``, ``nivel_efeito`` e
+        ``mensagem_educacional`` para o frontend.
+    """
     if jogada_valida:
         estado.sequencia_atual += 1
         estado.total_jogadas += 1
@@ -130,6 +168,14 @@ def atualizar_streak(estado: EstadoJogo, jogada_valida: bool, estruturas_usadas:
 
 
 def verificar_vitoria(estado: EstadoJogo) -> bool:
+    """Define ``jogo_vencido`` se as quatro pilhas de fundação tiverem 13 cartas cada.
+
+    Args:
+        estado: Partida a inspecionar (mutado quando há vitória).
+
+    Returns:
+        ``True`` se e somente se todas as pilhas estão completas.
+    """
     for pilha in estado.pilhas_fundacao.values():
         if pilha.obter_tamanho() != 13:
             return False
@@ -138,6 +184,14 @@ def verificar_vitoria(estado: EstadoJogo) -> bool:
 
 
 def executar_fila_para_fila(estado: EstadoJogo) -> dict[str, Any]:
+    """Executa movimento tipo 1: rotação da frente da fila de compra para o final.
+
+    Args:
+        estado: Partida cujo ``fila_compra`` será alterado.
+
+    Returns:
+        Resultado padrão com ``jogada_valida``, ``operacoes_realizadas`` e ``streak``.
+    """
     resultado = estado.fila_compra.reposicionar_frente(registrar_passos=True)
     if not resultado["operacao_sucesso"]:
         streak = atualizar_streak(estado, False, [])
@@ -152,6 +206,15 @@ def executar_fila_para_fila(estado: EstadoJogo) -> dict[str, Any]:
 
 
 def executar_fila_para_pilha(estado: EstadoJogo, naipe_destino: str) -> dict[str, Any]:
+    """Executa movimento tipo 2: frente da fila para pilha de fundação do naipe dado.
+
+    Args:
+        estado: Partida atual.
+        naipe_destino: Chave da pilha: ``c``, ``o``, ``p`` ou ``e``.
+
+    Returns:
+        Resultado padrão; em vitória, ``streak['nivel_efeito']`` pode ser ``vitoria``.
+    """
     pilha = estado.pilhas_fundacao.get(naipe_destino)
     if not pilha:
         streak = atualizar_streak(estado, False, [])
@@ -185,6 +248,15 @@ def executar_fila_para_pilha(estado: EstadoJogo, naipe_destino: str) -> dict[str
 
 
 def executar_fila_para_lista(estado: EstadoJogo, indice_lista: int) -> dict[str, Any]:
+    """Executa movimento tipo 3: frente da fila para o final da coluna ``indice_lista``.
+
+    Args:
+        estado: Partida atual.
+        indice_lista: Índice 0..6 da coluna do tableau.
+
+    Returns:
+        Resultado padrão do motor.
+    """
     if indice_lista < 0 or indice_lista > 6:
         streak = atualizar_streak(estado, False, [])
         return {"jogada_valida": False, "motivo_rejeicao": "Lista inválida", "streak": streak, "operacoes_realizadas": []}
@@ -214,6 +286,16 @@ def executar_fila_para_lista(estado: EstadoJogo, indice_lista: int) -> dict[str,
 
 
 def executar_pilha_para_lista(estado: EstadoJogo, naipe_origem: str, indice_lista: int) -> dict[str, Any]:
+    """Executa movimento tipo 4: topo da pilha de ``naipe_origem`` para a coluna.
+
+    Args:
+        estado: Partida atual.
+        naipe_origem: ``c``, ``o``, ``p`` ou ``e``.
+        indice_lista: Coluna de destino (0..6).
+
+    Returns:
+        Resultado padrão do motor.
+    """
     pilha = estado.pilhas_fundacao.get(naipe_origem)
     if not pilha or indice_lista < 0 or indice_lista > 6:
         streak = atualizar_streak(estado, False, [])
@@ -244,6 +326,16 @@ def executar_pilha_para_lista(estado: EstadoJogo, naipe_origem: str, indice_list
 
 
 def executar_lista_para_pilha(estado: EstadoJogo, indice_lista: int, naipe_destino: str) -> dict[str, Any]:
+    """Executa movimento tipo 5: última carta da coluna para a pilha de fundação.
+
+    Args:
+        estado: Partida atual.
+        indice_lista: Coluna de origem (0..6).
+        naipe_destino: Pilha de destino.
+
+    Returns:
+        Resultado padrão; pode incluir operação sintética ``virar_carta`` na origem.
+    """
     pilha = estado.pilhas_fundacao.get(naipe_destino)
     if not pilha or indice_lista < 0 or indice_lista > 6:
         streak = atualizar_streak(estado, False, [])
@@ -290,6 +382,18 @@ def executar_lista_para_pilha(estado: EstadoJogo, indice_lista: int, naipe_desti
 
 
 def executar_lista_para_lista(estado: EstadoJogo, indice_origem: int, posicao_corte: int, indice_destino: int) -> dict[str, Any]:
+    """Executa movimento tipo 6: sublista a partir de ``posicao_corte`` entre colunas.
+
+    Args:
+        estado: Partida atual.
+        indice_origem: Coluna de onde se remove o sufixo.
+        posicao_corte: Índice base zero do primeiro nó movido (ordem do array da API).
+        indice_destino: Coluna de destino.
+
+    Returns:
+        Resultado padrão; ``operacoes_realizadas`` inclui remoção e um ``inserir_final``
+        por carta, mais ``virar_carta`` na origem quando aplicável.
+    """
     if indice_origem < 0 or indice_origem > 6 or indice_destino < 0 or indice_destino > 6:
         streak = atualizar_streak(estado, False, [])
         return {"jogada_valida": False, "motivo_rejeicao": "Listas inválidas", "streak": streak, "operacoes_realizadas": []}

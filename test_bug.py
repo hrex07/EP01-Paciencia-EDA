@@ -1,7 +1,7 @@
-import asyncio
+"""Script manual de depuração para cores e validação lista (não é suíte pytest)."""
+
 from motor.estado_jogo import EstadoJogo
 from modelo.carta_baralho import CartaBaralho
-from motor.controlador_jogo import executar_lista_para_lista
 from motor.regras_movimento import _validar_pode_listar
 
 c1 = CartaBaralho(12, "c", status_carta=True) # Q♥

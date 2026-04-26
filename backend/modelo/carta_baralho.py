@@ -65,10 +65,14 @@ class CartaBaralho:
         return "preta"
 
     def para_dicionario_json(self) -> dict[str, Any]:
-        """Mapeia a carta para dicionário JSON (API e `operacoes_realizadas`).
+        """Mapeia a carta para dicionário JSON (API e ``operacoes_realizadas``).
 
         Carta virada para baixo não expõe número ou naipe; alinha com
-        :meth:`EstadoJogo.serializar` para o board.
+        :meth:`motor.estado_jogo.EstadoJogo.serializar` para o tabuleiro.
+
+        Returns:
+            Dict com ``status_carta`` e, se virada para cima, campos ``numero_carta``,
+            ``naipe_carta``, ``texto`` e ``cor``.
         """
         if not self.status_carta:
             return {"status_carta": False, "texto": "verso"}
@@ -81,7 +85,11 @@ class CartaBaralho:
         }
 
     def serializar_completo(self) -> dict[str, Any]:
-        """Mapeia a carta para dicionário JSON completo (para o Banco de Dados)."""
+        """Mapeia a carta para JSON completo (persistência / Firestore).
+
+        Returns:
+            Dict sempre com ``numero_carta``, ``naipe_carta`` e ``status_carta``.
+        """
         return {
             "numero_carta": self.numero_carta,
             "naipe_carta": self.naipe_carta,
@@ -90,12 +98,17 @@ class CartaBaralho:
 
     @staticmethod
     def desserializar(dados: dict[str, Any]) -> CartaBaralho:
-        """Recria uma instância de CartaBaralho a partir de um dicionário.
+        """Recria uma instância a partir de um dicionário (persistência completa).
 
-        Se a carta estava virada para baixo no JSON serializado para a API, 
-        ela não terá número/naipe. Nesses casos, o Firestore deve armazenar 
-        o estado completo. Assumimos que para o Banco de Dados salvamos sempre 
-        o estado completo da carta.
+        Args:
+            dados: Saída de :meth:`serializar_completo` com chaves obrigatórias.
+
+        Returns:
+            Nova instância de ``CartaBaralho``.
+
+        Note:
+            O JSON público da API para carta virada não inclui número/naipe;
+            esse método destina-se ao payload completo salvo no Firestore.
         """
         return CartaBaralho(
             numero_carta=dados["numero_carta"],
@@ -129,6 +142,7 @@ class CartaBaralho:
         )
 
     def __eq__(self, outro_objeto: object) -> bool:
+        """Igualdade por número, naipe e status de visibilidade."""
         if not isinstance(outro_objeto, CartaBaralho):
             return NotImplemented
         return (

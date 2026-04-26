@@ -12,7 +12,10 @@ from fastapi import Request
 
 # Logger próprio com handler em stderr: não depender da config do `uvicorn.error`
 # (em alguns modos o nível/handlers não mostram `ERROR` no terminal).
+
+
 def _obter_log_500() -> logging.Logger:
+    """Retorna logger dedicado a erros HTTP 500 com handler em stderr."""
     name = "ep01.http500"
     log = logging.getLogger(name)
     if not log.handlers:
@@ -31,23 +34,44 @@ def _obter_log_500() -> logging.Logger:
 
 
 def log_mensagem_500(mensagem: str) -> None:
-    """Uma linha de log para 500 sem exceção (ex.: resposta 500 em texto plano)."""
+    """Registra uma linha de erro sem objeto ``Exception`` (casos raros ASGI).
+
+    Args:
+        mensagem: Texto descritivo (ex.: 500 em texto plano sem traceback).
+    """
     _obter_log_500().error("%s", mensagem)
 
 
 def _expor_trace_no_json() -> bool:
-    """Inclui o texto do stack no JSON; desligar em produção pública (API_500_INCLUIR_TRACO_NO_JSON=0)."""
+    """Indica se o JSON de erro deve incluir ``stacktrace`` (variável de ambiente).
+
+    Returns:
+        ``False`` quando ``API_500_INCLUIR_TRACO_NO_JSON`` for ``0``/``false``.
+    """
     v = os.getenv("API_500_INCLUIR_TRACO_NO_JSON", "1")
     return v not in ("0", "false", "False")
 
 
 def _expor_mensagem_excecao_no_json() -> bool:
+    """Indica se a mensagem textual da exceção entra no JSON (``API_ERRO_500_CONTEUDO``).
+
+    Returns:
+        ``False`` quando a variável de ambiente for ``0``/``false`` (omitir
+        campo ``mensagem`` no JSON).
+    """
     v = os.getenv("API_ERRO_500_CONTEUDO", "1")
     return v not in ("0", "false", "False")
 
 
 def formatted_traceback(exc: BaseException) -> str:
-    """String completa (multilinha) do stack, incluindo cause/chaining."""
+    """Monta o traceback completo da exceção, incluindo encadeamento de causas.
+
+    Args:
+        exc: Qualquer ``BaseException`` com traceback associado.
+
+    Returns:
+        Texto multilinha compatível com logs e campo ``stacktrace`` no JSON.
+    """
     return "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
 
 
@@ -57,7 +81,14 @@ def logar_500(
     request: Request | None = None,
     contexto: str = "",
 ) -> None:
-    """Grava o traceback no stderr (sempre visível) — chamar para todo 500 com exceção associada."""
+    """Grava o traceback no stderr; usar em todo 500 com exceção associada.
+
+    Args:
+        exc: Exceção capturada.
+        request: Requisição FastAPI opcional (método e path no log).
+        contexto: Rótulo curto para identificar o ponto do código (ex. prefixo
+            ``mover:``).
+    """
     m = f"500 {contexto or type(exc).__name__}" if not contexto else f"500 {contexto}"
     if request is not None:
         m = f"{m} | {request.method} {request.url.path}"
@@ -76,7 +107,18 @@ def corpo_comum_500(
     request: Request | None = None,
     extra: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Base JSON; inclui `stacktrace` se API_500_INCLUIR_TRACO_NO_JSON permitir."""
+    """Monta o dicionário JSON padrão para respostas HTTP 500.
+
+    Args:
+        exc: Exceção original (para tipo, mensagem e stack opcional).
+        detalhe: Campo ``detail`` amigável ao cliente.
+        request: Opcional; usado apenas para logging via :func:`logar_500`.
+        extra: Chaves adicionais fundidas no corpo (ex. ``errors`` de Pydantic).
+
+    Returns:
+        Dict com ``detail``, ``erro_tipo`` e, conforme flags de ambiente,
+        ``mensagem`` e ``stacktrace``.
+    """
     logar_500(exc, request=request, contexto=type(exc).__name__)
     corpo: dict[str, Any] = {"detail": detalhe, "erro_tipo": type(exc).__name__}
     if _expor_mensagem_excecao_no_json():

@@ -21,12 +21,21 @@ PLAYGROUND_LISTA = ListaLigadaCartas(nome_lista="lista_playground")
 
 
 def _carta_from_schema(c: CartaEntrada) -> CartaBaralho:
+    """Converte schema Pydantic de entrada em :class:`modelo.carta_baralho.CartaBaralho`.
+
+    Args:
+        c: Carta validada pelo corpo da requisição.
+
+    Returns:
+        Instância de domínio pronta para operações nas estruturas.
+    """
     return CartaBaralho(c.numero_carta, c.naipe_carta, status_carta=c.status_carta)
 
 
 # == PILHA ==
 @rotas_estruturas.post("/pilha/empilhar", summary="Demonstração: Push (Pilha)")
 def demo_pilha_empilhar(carta: CartaEntrada = Body(...)) -> dict[str, Any]:
+    """Empilha uma carta na instância global de playground da pilha."""
     return sanitizar_motor_para_json(
         PLAYGROUND_PILHA.empilhar(_carta_from_schema(carta), registrar_passos=True)
     )
@@ -34,6 +43,7 @@ def demo_pilha_empilhar(carta: CartaEntrada = Body(...)) -> dict[str, Any]:
 
 @rotas_estruturas.post("/pilha/desempilhar", summary="Demonstração: Pop (Pilha)")
 def demo_pilha_desempilhar() -> dict[str, Any]:
+    """Remove o topo da pilha de playground; ``valor_retornado`` vira texto da carta."""
     resultado = PLAYGROUND_PILHA.desempilhar(registrar_passos=True)
     if resultado["operacao_sucesso"]:
         resultado["valor_retornado"] = resultado["valor_retornado"].texto_carta()
@@ -43,6 +53,7 @@ def demo_pilha_desempilhar() -> dict[str, Any]:
 # == FILA ==
 @rotas_estruturas.post("/fila/enfileirar", summary="Demonstração: Enqueue (Fila)")
 def demo_fila_enfileirar(carta: CartaEntrada = Body(...)) -> dict[str, Any]:
+    """Enfileira carta na instância global de playground da fila."""
     return sanitizar_motor_para_json(
         PLAYGROUND_FILA.enfileirar(_carta_from_schema(carta), registrar_passos=True)
     )
@@ -50,6 +61,7 @@ def demo_fila_enfileirar(carta: CartaEntrada = Body(...)) -> dict[str, Any]:
 
 @rotas_estruturas.post("/fila/desenfileirar", summary="Demonstração: Dequeue (Fila)")
 def demo_fila_desenfileirar() -> dict[str, Any]:
+    """Remove a frente da fila de playground; ``valor_retornado`` vira texto da carta."""
     resultado = PLAYGROUND_FILA.desenfileirar(registrar_passos=True)
     if resultado["operacao_sucesso"]:
         resultado["valor_retornado"] = resultado["valor_retornado"].texto_carta()
@@ -59,6 +71,7 @@ def demo_fila_desenfileirar() -> dict[str, Any]:
 # == LISTA LIGADA ==
 @rotas_estruturas.post("/lista/inserir_final", summary="Demonstração: Append (Lista)")
 def demo_lista_inserir(carta: CartaEntrada = Body(...)) -> dict[str, Any]:
+    """Insere carta ao final da lista duplamente ligada de playground."""
     return sanitizar_motor_para_json(
         PLAYGROUND_LISTA.inserir_final(_carta_from_schema(carta), registrar_passos=True)
     )
@@ -66,6 +79,7 @@ def demo_lista_inserir(carta: CartaEntrada = Body(...)) -> dict[str, Any]:
 
 @rotas_estruturas.post("/lista/remover_final", summary="Demonstração: Remove Last (Lista)")
 def demo_lista_remover() -> dict[str, Any]:
+    """Remove o último nó da lista de playground; ``valor_retornado`` vira texto da carta."""
     resultado = PLAYGROUND_LISTA.remover_final(registrar_passos=True)
     if resultado["operacao_sucesso"]:
         resultado["valor_retornado"] = resultado["valor_retornado"].texto_carta()

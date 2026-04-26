@@ -1,4 +1,8 @@
-"""Ponto de entrada da aplicação FastAPI."""
+"""Ponto de entrada da aplicação FastAPI.
+
+Configura CORS, rate limiting opcional, routers da API e handlers globais de
+exceção para respostas JSON diagnosticáveis em erro 500.
+"""
 
 import os
 import time
@@ -48,6 +52,15 @@ class LimiteRequisicoesHttp(BaseHTTPMiddleware):
     """Limita requisições por IP. Deve ficar *dentro* do CORS (add_middleware abaixo)."""
 
     async def dispatch(self, request: Request, call_next):
+        """Encadeia a requisição ou devolve 429 se o limite por IP for excedido.
+
+        Args:
+            request: Requisição Starlette/FastAPI.
+            call_next: Próximo handler na pilha de middleware.
+
+        Returns:
+            Resposta da aplicação ou ``JSONResponse`` com status 429.
+        """
         if RATE_LIMIT_MAX_REQUESTS <= 0:
             return await call_next(request)
 
@@ -75,6 +88,15 @@ class Resposta500Logger(BaseHTTPMiddleware):
     """Garante log quando a aplicação devolve 500 sem passar nossos exception_handlers (raro: Starlette/ASGI)."""
 
     async def dispatch(self, request: Request, call_next) -> Response:
+        """Propaga a resposta e regista 500 em texto plano (diagnóstico).
+
+        Args:
+            request: Requisição atual.
+            call_next: Próximo handler.
+
+        Returns:
+            A mesma resposta produzida pela aplicação.
+        """
         try:
             resposta: Response = await call_next(request)
         except Exception:

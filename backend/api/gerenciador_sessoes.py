@@ -1,4 +1,8 @@
-"""Gerenciamento de sessões do jogo no Google Cloud Firestore."""
+"""Gerenciamento de sessões do jogo no Google Cloud Firestore.
+
+Lê e grava o :class:`motor.estado_jogo.EstadoJogo` serializado, com janela
+deslizante de expiração (TTL) por documento de sessão.
+"""
 
 import os
 import time
@@ -20,7 +24,15 @@ db = firestore.Client(project=PROJECT_ID, database=DATABASE_ID)
 
 
 def obter_estado(id_sessao: str) -> Optional[EstadoJogo]:
-    """Retorna o estado do jogo do Firestore ou None se não existir / expirou."""
+    """Carrega o estado da partida a partir do Firestore.
+
+    Args:
+        id_sessao: UUID do documento na coleção configurada.
+
+    Returns:
+        Instância de ``EstadoJogo`` desserializada, ou ``None`` se o documento
+        não existir ou tiver expirado (e for removido).
+    """
     doc_ref = db.collection(COLECAO_SESSOES).document(id_sessao)
     doc = doc_ref.get()
     
@@ -43,7 +55,12 @@ def obter_estado(id_sessao: str) -> Optional[EstadoJogo]:
 
 
 def salvar_estado(estado: EstadoJogo) -> None:
-    """Salva o estado serializado no Firestore."""
+    """Persiste o estado completo da partida (upsert por ``id_sessao``).
+
+    Args:
+        estado: Partida atual; ``estado.serializar_completo()`` é gravado
+            no campo ``estado_completo``, com carimbo de acesso e expiração.
+    """
     agora = time.time()
     dados_sessao = {
         "id_sessao": estado.id_sessao,

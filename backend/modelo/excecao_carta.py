@@ -1,5 +1,8 @@
-"""Exceções relacionadas a cartas inválidas."""
+"""Exceções relacionadas a cartas inválidas ou tipos incorretos nas estruturas."""
 
 
 class CartaInvalidaError(ValueError):
-    """Carta com número ou naipe fora do domínio permitido."""
+    """Lançada quando número, naipe ou tipo de objeto não satisfaz o domínio esperado.
+
+    Herda de :class:`ValueError` para compatibilidade com validações comuns.
+    """

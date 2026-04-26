@@ -1,4 +1,8 @@
-"""Regras de validação de movimentos do Paciência."""
+"""Regras de validação de movimentos do Paciência (Klondike / EP01).
+
+Funções puras que consultam fila, pilhas e listas ligadas sem alterar estado,
+retornando ``(True, mensagem_ok)`` ou ``(False, motivo_da_rejeição)``.
+"""
 
 from modelo.carta_baralho import CartaBaralho
 from modelo.fila_cartas import FilaCartas
@@ -7,6 +11,14 @@ from modelo.pilha_cartas import PilhaCartas
 
 
 def _leitura_topo_pilha_ou_motivo(pilha: PilhaCartas) -> tuple[CartaBaralho | None, str | None]:
+    """Lê o topo da pilha sem pop; devolve motivo textual se leitura falhar.
+
+    Args:
+        pilha: Pilha de fundação ou auxiliar.
+
+    Returns:
+        Tupla ``(carta, None)`` em sucesso, ou ``(None, mensagem_erro)``.
+    """
     r = pilha.espiar_topo(registrar_passos=False)
     if not r.get("operacao_sucesso"):
         return None, "A pilha de destino está vazia (leitura inconsistente)."
@@ -17,6 +29,14 @@ def _leitura_topo_pilha_ou_motivo(pilha: PilhaCartas) -> tuple[CartaBaralho | No
 
 
 def _leitura_ultima_lista_ou_motivo(lista: ListaLigadaCartas) -> tuple[CartaBaralho | None, str | None]:
+    """Lê a carta da cauda da lista sem remover.
+
+    Args:
+        lista: Coluna do tableau.
+
+    Returns:
+        Tupla ``(carta, None)`` ou ``(None, mensagem_erro)``.
+    """
     r = lista.obter_ultima_carta(registrar_passos=False)
     if not r.get("operacao_sucesso"):
         return None, "A lista de origem está vazia (leitura inconsistente com a validação anterior)."
@@ -29,7 +49,17 @@ def _leitura_ultima_lista_ou_motivo(lista: ListaLigadaCartas) -> tuple[CartaBara
 def _validar_pode_empilhar(
     carta_mover: CartaBaralho, pilha_destino: PilhaCartas
 ) -> tuple[bool, str]:
-    """Verifica se carta_mover pode entrar em pilha_destino (M1 adaptado / inverso de M2)."""
+    """Verifica se ``carta_mover`` pode ser empilhada em ``pilha_destino``.
+
+    Regras: Ás inicia pilha vazia; demais cartas mesmo naipe e sequência crescente.
+
+    Args:
+        carta_mover: Carta candidata ao topo da pilha.
+        pilha_destino: Pilha de fundação de destino.
+
+    Returns:
+        ``(True, mensagem)`` ou ``(False, motivo)``.
+    """
     if pilha_destino.esta_vazia():
         if carta_mover.numero_carta == 1:
             return True, "Ás colocado em pilha vazia."
@@ -51,7 +81,15 @@ def _validar_pode_empilhar(
 def _validar_pode_listar(
     carta_mover: CartaBaralho, lista_destino: ListaLigadaCartas
 ) -> tuple[bool, str]:
-    """Verifica se carta_mover pode entrar no final de lista_destino (M1/M2/M3)."""
+    """Verifica se ``carta_mover`` pode ir ao final de ``lista_destino`` (tableau).
+
+    Args:
+        carta_mover: Carta a posicionar na coluna.
+        lista_destino: Lista duplamente encadeada da coluna.
+
+    Returns:
+        ``(True, mensagem)`` ou ``(False, motivo)``.
+    """
     if lista_destino.esta_vazia():
         if carta_mover.numero_carta == 13:
             return True, "Rei colocado em lista vazia."
@@ -73,6 +111,15 @@ def _validar_pode_listar(
 def validar_fila_para_pilha(
     fila_origem: FilaCartas, pilha_destino: PilhaCartas
 ) -> tuple[bool, str]:
+    """Valida movimento da frente da fila de compra para uma pilha de fundação.
+
+    Args:
+        fila_origem: Fila de compra.
+        pilha_destino: Pilha de destino.
+
+    Returns:
+        Resultado da validação de empilhamento sobre a carta da frente.
+    """
     if fila_origem.esta_vazia():
         return False, "A fila de compra está vazia."
 
@@ -88,6 +135,15 @@ def validar_fila_para_pilha(
 def validar_fila_para_lista(
     fila_origem: FilaCartas, lista_destino: ListaLigadaCartas
 ) -> tuple[bool, str]:
+    """Valida movimento da frente da fila para o final de uma coluna do tableau.
+
+    Args:
+        fila_origem: Fila de compra.
+        lista_destino: Coluna de destino.
+
+    Returns:
+        Resultado da validação de encaixe na lista.
+    """
     if fila_origem.esta_vazia():
         return False, "A fila de compra está vazia."
 
@@ -103,6 +159,15 @@ def validar_fila_para_lista(
 def validar_pilha_para_lista(
     pilha_origem: PilhaCartas, lista_destino: ListaLigadaCartas
 ) -> tuple[bool, str]:
+    """Valida movimento do topo da pilha de origem para o final da coluna.
+
+    Args:
+        pilha_origem: Pilha de onde sai a carta.
+        lista_destino: Coluna do tableau.
+
+    Returns:
+        Resultado da validação de encaixe na lista.
+    """
     if pilha_origem.esta_vazia():
         return False, "A pilha de origem está vazia."
 
@@ -118,6 +183,15 @@ def validar_pilha_para_lista(
 def validar_lista_para_pilha(
     lista_origem: ListaLigadaCartas, pilha_destino: PilhaCartas
 ) -> tuple[bool, str]:
+    """Valida movimento da última carta visível da coluna para a pilha.
+
+    Args:
+        lista_origem: Coluna do tableau.
+        pilha_destino: Pilha de fundação.
+
+    Returns:
+        Resultado da validação de empilhamento sobre a última carta da lista.
+    """
     if lista_origem.esta_vazia():
         return False, "A lista de origem está vazia."
 
@@ -133,6 +207,16 @@ def validar_lista_para_lista(
     indice_corte: int,
     lista_destino: ListaLigadaCartas
 ) -> tuple[bool, str]:
+    """Valida movimento de sublista (a partir de ``indice_corte``) entre colunas.
+
+    Args:
+        lista_origem: Coluna de onde parte o sufixo.
+        indice_corte: Índice base zero do primeiro nó movido (face da carta deve estar para cima).
+        lista_destino: Coluna de destino.
+
+    Returns:
+        ``(True, mensagem)`` ou ``(False, motivo)`` (índice, cor, ordem numérica).
+    """
     if lista_origem.esta_vazia():
         return False, "A lista de origem está vazia."
 

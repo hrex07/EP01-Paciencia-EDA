@@ -1,6 +1,10 @@
+"""Testes de regressão para alternância de cores no tableau (:func:`_validar_pode_listar`)."""
+
 from modelo.carta_baralho import CartaBaralho
 
+
 def test_validar_pode_listar_cores_alternadas() -> None:
+    """Garante que vermelho sobre preto (e vice-versa) é aceito; mesma cor é rejeitada."""
     from motor.regras_movimento import _validar_pode_listar
     from modelo.lista_ligada_cartas import ListaLigadaCartas
     

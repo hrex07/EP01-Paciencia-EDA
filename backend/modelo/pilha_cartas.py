@@ -32,16 +32,32 @@ class PilhaCartas:
         self.quantidade_elementos = 0
 
     def esta_vazia(self) -> bool:
-        """Verifica se não há elementos na pilha."""
+        """Verifica se não há elementos na pilha.
+
+        Returns:
+            ``True`` se ``elemento_topo`` for ``None``.
+        """
         return self.elemento_topo is None
 
     def obter_tamanho(self) -> int:
-        """Retorna número de cartas atualmente empilhadas."""
+        """Retorna número de cartas atualmente empilhadas.
+
+        Returns:
+            Valor de ``quantidade_elementos``.
+        """
         return self.quantidade_elementos
 
     @staticmethod
     def desserializar(dados_lista: list[dict[str, Any]], nome_pilha: str) -> PilhaCartas:
-        """Recria uma instância de PilhaCartas a partir de uma lista de dicionários de cartas."""
+        """Reconstrói a pilha empilhando cartas na ordem do array persistido.
+
+        Args:
+            dados_lista: Cartas de baixo para cima conforme serialização do estado.
+            nome_pilha: Nome lógico da pilha.
+
+        Returns:
+            ``PilhaCartas`` preenchida.
+        """
         pilha = PilhaCartas(nome_pilha=nome_pilha)
         for d_carta in dados_lista:
             carta = CartaBaralho.desserializar(d_carta)
@@ -184,7 +200,14 @@ class PilhaCartas:
         }
 
     def desempilhar(self, *, registrar_passos: bool = True) -> dict[str, Any]:
-        """Remove e retorna a carta do topo (pop)."""
+        """Remove e retorna a carta do topo (pop).
+
+        Args:
+            registrar_passos: Se inclui narrativa passo a passo.
+
+        Returns:
+            Resultado-padrão com ``valor_retornado`` = ``CartaBaralho`` em sucesso.
+        """
         lista_passos: list[dict[str, Any]] = []
         numero_passo = 0
 
@@ -262,7 +285,14 @@ class PilhaCartas:
         }
 
     def espiar_topo(self, *, registrar_passos: bool = True) -> dict[str, Any]:
-        """Retorna o topo sem remover (peek)."""
+        """Retorna o topo sem remover (peek).
+
+        Args:
+            registrar_passos: Se inclui passo didático.
+
+        Returns:
+            Resultado-padrão com ``valor_retornado`` em sucesso.
+        """
         lista_passos: list[dict[str, Any]] = []
         numero_passo = 0
 

@@ -1,4 +1,9 @@
-"""Lista duplamente ligada de cartas com operações didáticas e log narrado."""
+"""Lista duplamente ligada de cartas com operações didáticas e log narrado.
+
+Cada método que altera ou consulta a estrutura pode devolver um dicionário
+padrão com ``operacao_nome``, ``operacao_sucesso``, ``passos_executados``,
+etc., para integração com o painel educacional e a API.
+"""
 
 from __future__ import annotations
 
@@ -31,16 +36,32 @@ class ListaLigadaCartas:
         self.quantidade_elementos = 0
 
     def esta_vazia(self) -> bool:
-        """Retorna True se não há nós."""
+        """Indica se a lista não contém nós.
+
+        Returns:
+            ``True`` se ``cabeca_no`` for ``None``.
+        """
         return self.cabeca_no is None
 
     def obter_tamanho(self) -> int:
-        """Retorna número de cartas na lista."""
+        """Retorna a quantidade atual de nós (cartas) na lista.
+
+        Returns:
+            Valor do contador ``quantidade_elementos``.
+        """
         return self.quantidade_elementos
 
     @staticmethod
     def desserializar(dados_lista: list[dict[str, Any]], nome_lista: str) -> ListaLigadaCartas:
-        """Recria uma instância de ListaLigadaCartas a partir de uma lista de dicionários de cartas."""
+        """Reconstrói a lista a partir de cartas serializadas completas.
+
+        Args:
+            dados_lista: Sequência de dicts aceitos por ``CartaBaralho.desserializar``.
+            nome_lista: Nome lógico da coluna (logs).
+
+        Returns:
+            Instância preenchida na ordem do array (cabeça → cauda).
+        """
         lista = ListaLigadaCartas(nome_lista=nome_lista)
         for d_carta in dados_lista:
             carta = CartaBaralho.desserializar(d_carta)
@@ -48,7 +69,14 @@ class ListaLigadaCartas:
         return lista
 
     def _no_indice(self, indice_alvo: int) -> Optional[NoEncadeado]:
-        """Retorna o nó na posição `indice_alvo` (base zero) ou None."""
+        """Percorre a partir da cabeça até o índice informado.
+
+        Args:
+            indice_alvo: Posição base zero (0 = cabeça).
+
+        Returns:
+            Referência ao nó ou ``None`` se índice inválido.
+        """
         if indice_alvo < 0 or indice_alvo >= self.quantidade_elementos:
             return None
         no_atual = self.cabeca_no
@@ -64,7 +92,18 @@ class ListaLigadaCartas:
         *, #Força o uso de argumentos nomeados
         registrar_passos: bool = True,
     ) -> dict[str, Any]:
-        """Insere carta após o último nó."""
+        """Insere a carta após o último nó (append na lista dupla).
+
+        Args:
+            carta_nova: Carta a anexar na cauda.
+            registrar_passos: Se inclui narrativa passo a passo.
+
+        Returns:
+            Dicionário-padrão de operação com ``operacao_nome`` ``inserir_final``.
+
+        Raises:
+            CartaInvalidaError: Se ``carta_nova`` não for ``CartaBaralho``.
+        """
         if not isinstance(carta_nova, CartaBaralho):
             raise CartaInvalidaError("inserir_final espera CartaBaralho.")
         lista_passos: list[dict[str, Any]] = []
@@ -147,7 +186,20 @@ class ListaLigadaCartas:
         *,
         registrar_passos: bool = True,
     ) -> dict[str, Any]:
-        """Insere carta na posição `indice_posicao` (0 = novo primeiro nó)."""
+        """Insere carta na posição ``indice_posicao`` (0 = novo primeiro nó).
+
+        Args:
+            carta_nova: Carta a inserir.
+            indice_posicao: Índice base zero; pode ser ``tamanho`` para delegar a
+                :meth:`inserir_final`.
+            registrar_passos: Controla o log didático.
+
+        Returns:
+            Resultado-padrão; em índice inválido, ``operacao_sucesso`` é falso.
+
+        Raises:
+            CartaInvalidaError: Se ``carta_nova`` não for ``CartaBaralho``.
+        """
         if not isinstance(carta_nova, CartaBaralho):
             raise CartaInvalidaError("inserir_posicao espera CartaBaralho.")
         lista_passos: list[dict[str, Any]] = []
@@ -260,7 +312,14 @@ class ListaLigadaCartas:
         }
 
     def remover_final(self, *, registrar_passos: bool = True) -> dict[str, Any]:
-        """Remove o último nó e devolve sua carta."""
+        """Remove o último nó e devolve a carta da antiga cauda.
+
+        Args:
+            registrar_passos: Se inclui narrativa passo a passo.
+
+        Returns:
+            Resultado-padrão com ``valor_retornado`` = ``CartaBaralho`` em sucesso.
+        """
         lista_passos: list[dict[str, Any]] = []
         if self.cauda_no is None:
             lista_passos.append(
@@ -424,7 +483,15 @@ class ListaLigadaCartas:
         *,
         registrar_passos: bool = True,
     ) -> dict[str, Any]:
-        """Retorna a carta no índice informado sem alterar a lista."""
+        """Retorna a carta no índice informado sem alterar a lista (acesso indexado).
+
+        Args:
+            indice_posicao: Posição base zero a partir da cabeça.
+            registrar_passos: Se inclui passos de “percorrer” a lista.
+
+        Returns:
+            Resultado-padrão com ``valor_retornado`` = carta em sucesso.
+        """
         lista_passos: list[dict[str, Any]] = []
         if indice_posicao < 0 or indice_posicao >= self.quantidade_elementos:
             lista_passos.append(
@@ -486,7 +553,14 @@ class ListaLigadaCartas:
         }
 
     def obter_ultima_carta(self, *, registrar_passos: bool = True) -> dict[str, Any]:
-        """Retorna a carta do último nó sem remover."""
+        """Retorna a carta da cauda sem remover (peek do fim da coluna).
+
+        Args:
+            registrar_passos: Se inclui passo didático.
+
+        Returns:
+            Resultado-padrão com ``valor_retornado`` em sucesso.
+        """
         lista_passos: list[dict[str, Any]] = []
         if self.cauda_no is None:
             lista_passos.append(
@@ -539,8 +613,16 @@ class ListaLigadaCartas:
     ) -> dict[str, Any]:
         """Percorre a lista e devolve o primeiro índice que satisfaz os critérios.
 
-        Pelo menos um dentre `numero_carta` ou `naipe_carta` deve ser informado.
+        Pelo menos um dentre ``numero_carta`` ou ``naipe_carta`` deve ser informado.
         Se ambos forem informados, exige coincidência nos dois campos.
+
+        Args:
+            numero_carta: Valor 1..13 opcional.
+            naipe_carta: Letra do naipe opcional.
+            registrar_passos: Se inclui narrativa da busca linear.
+
+        Returns:
+            Resultado-padrão com ``valor_retornado`` = índice (int) ou ``-1``.
         """
         lista_passos: list[dict[str, Any]] = []
         if numero_carta is None and naipe_carta is None:

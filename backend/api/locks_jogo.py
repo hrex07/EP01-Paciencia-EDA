@@ -12,6 +12,18 @@ _por_sessao: dict[str, threading.RLock] = {}
 
 
 def lock_motor_sessao(id_sessao: str) -> threading.RLock:
+    """Obtém (ou cria) um ``RLock`` exclusivo por sessão de jogo.
+
+    Garante exclusão mútua entre requisições que alteram o mesmo estado,
+    evitando condições de corrida no motor.
+
+    Args:
+        id_sessao: Identificador da partida.
+
+    Returns:
+        Instância de ``threading.RLock`` dedicada a essa sessão; deve ser
+        usada tipicamente com ``with lock_motor_sessao(sid):``.
+    """
     with _registry:
         if id_sessao not in _por_sessao:
             _por_sessao[id_sessao] = threading.RLock()

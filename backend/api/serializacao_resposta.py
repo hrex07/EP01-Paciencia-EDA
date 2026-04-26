@@ -17,6 +17,17 @@ def _sanit_motor(
     _prof: int = 0,
     _caminho_ids: list[int] | None = None,
 ) -> Any:
+    """Serializa recursivamente objetos do domínio para tipos JSON-safe.
+
+    Args:
+        objeto_qualquer: Valor arbitrário (dict, list, ``CartaBaralho``, etc.).
+        _prof: Profundidade atual na travessia (uso interno).
+        _caminho_ids: Rastreamento de ``id()`` para detetar ciclos (interno).
+
+    Returns:
+        Estrutura equivalente só com tipos serializáveis em JSON; ciclos e
+        profundidade excessiva são substituídos por mensagens curtas em string.
+    """
     if _prof > _SANIT_PROF_MAX:
         return f"<aninhamento máximo ({_SANIT_PROF_MAX}) excedido>"
 
@@ -58,10 +69,16 @@ def _sanit_motor(
 
 
 def sanitizar_motor_para_json(objeto_qualquer: Any) -> Any:
-    """Converte aninhadamente :class:`CartaBaralho` em dicionário em dicts e listas.
+    """Converte aninhadamente :class:`CartaBaralho` em dicionários dentro de dicts/listas.
 
-    Usado em `log_preparacao` e `operacoes_realizadas` — o Uvicorn não serializa
+    Usado em ``log_preparacao`` e ``operacoes_realizadas``: o ASGI não serializa
     instâncias de modelos de domínio. Inclui limite de profundidade e deteção
-    básica de ciclos para evitar `RecursionError` (500 em `text/plain`).
+    básica de ciclos para evitar ``RecursionError`` (500 em ``text/plain``).
+
+    Args:
+        objeto_qualquer: Resposta parcial ou completa do motor (dict/list).
+
+    Returns:
+        Mesma forma aninhada com cartas como dicts e sem referências cíclicas.
     """
     return _sanit_motor(objeto_qualquer, _prof=0, _caminho_ids=None)

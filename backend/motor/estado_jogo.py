@@ -26,6 +26,7 @@ class EstadoJogo:
     """
 
     def __init__(self) -> None:
+        """Inicializa partida nova: fila, quatro pilhas de fundação e sete colunas."""
         self.id_sessao = str(uuid.uuid4())
         self.fila_compra = FilaCartas(nome_fila="fila_compra")
 
@@ -47,11 +48,17 @@ class EstadoJogo:
         self.jogo_vencido = False
 
     def serializar(self) -> dict[str, Any]:
-        """Serializa o estado atual para JSON.
-        
-        Cartas viradas para baixo não expõem seu número ou naipe.
+        """Serializa o estado para a API e o frontend (visão do jogador).
+
+        Cartas viradas para baixo não expõem número nem naipe (apenas ``texto``).
+
+        Returns:
+            Dict com ``id_sessao``, ``jogo_vencido``, ``estatisticas`` e
+            ``estruturas`` (fila, pilhas e tableau como listas de dicts de carta).
         """
-        def _serializar_carta(carta) -> dict[str, Any]:
+
+        def _serializar_carta(carta: object) -> dict[str, Any]:
+            """Converte uma carta ou placeholder inválido para o formato público da API."""
             if carta is None or not isinstance(carta, CartaBaralho):
                 return {"status_carta": False, "texto": "carta indisponível", "erro_dominio": True}
             return carta.para_dicionario_json()
@@ -100,8 +107,14 @@ class EstadoJogo:
         }
 
     def serializar_completo(self) -> dict[str, Any]:
-        """Serializa o estado COMPLETO para o Banco de Dados.
-        Usa dicionários para envolver listas e evitar erros de 'invalid nested entity' no Firestore.
+        """Serializa o estado completo para persistência (Firestore).
+
+        Inclui sempre número e naipe de cada carta. Usa wrappers ``{"cartas": [...]}``
+        onde necessário para compatibilidade com entidades aninhadas no Firestore.
+
+        Returns:
+            Dicionário com todos os campos de jogo e estruturas prontos para
+            ``EstadoJogo.desserializar``.
         """
         # Fila
         fila_cartas = []
@@ -150,7 +163,14 @@ class EstadoJogo:
 
     @staticmethod
     def desserializar(dados: dict[str, Any]) -> EstadoJogo:
-        """Recria o EstadoJogo completo a partir do dicionário do Banco de Dados."""
+        """Reconstrói :class:`EstadoJogo` a partir do payload gravado no Firestore.
+
+        Args:
+            dados: Saída de :meth:`serializar_completo` (mesmo esquema de chaves).
+
+        Returns:
+            Nova instância com ``id_sessao`` e estruturas preenchidas.
+        """
         estado = EstadoJogo()
         estado.id_sessao = dados["id_sessao"]
         estado.jogo_vencido = dados.get("jogo_vencido", False)

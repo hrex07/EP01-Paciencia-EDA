@@ -1,4 +1,4 @@
-"""Schemas Pydantic para validação e documentação da API."""
+"""Schemas Pydantic para validação de entrada e documentação OpenAPI da API."""
 
 from typing import Any, Optional
 
@@ -6,14 +6,23 @@ from pydantic import BaseModel, Field
 
 
 class CartaEntrada(BaseModel):
-    """Representa a entrada de uma carta."""
+    """Payload JSON para informar uma carta em rotas de demonstração.
+
+    Attributes:
+        numero_carta: Valor de 1 (Ás) a 13 (Rei).
+        naipe_carta: Letra do naipe em minúsculas.
+        status_carta: Face visível (``True``) ou oculta (``False``).
+    """
     numero_carta: int = Field(..., ge=1, le=13, description="Número da carta (1 a 13)")
     naipe_carta: str = Field(..., description="Naipe da carta ('c', 'o', 'p', 'e')")
     status_carta: bool = Field(False, description="True se a carta está virada para cima")
 
 
 class RequestMoverCarta(BaseModel):
-    """Corpo da requisição para realizar um movimento."""
+    """Corpo JSON de ``POST /api/jogo/{id_sessao}/mover``.
+
+    O campo ``tipo_movimento`` determina quais demais campos são obrigatórios.
+    """
     tipo_movimento: int = Field(
         ...,
         ge=1,

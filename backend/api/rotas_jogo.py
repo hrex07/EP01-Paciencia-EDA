@@ -1,4 +1,4 @@
-"""Rotas para o motor do jogo Paciência."""
+"""Rotas HTTP do motor do jogo Paciência (sessão, movimentos, estatísticas)."""
 
 from fastapi import APIRouter, HTTPException, Path, Query, Request
 from fastapi.encoders import jsonable_encoder
@@ -25,6 +25,14 @@ rotas_jogo = APIRouter()
 def criar_novo_jogo(
     log_detalhado: bool = Query(True, description="Se True, retorna os passos narrados da criação e distribuição.")
 ) -> dict[str, Any]:
+    """Cria partida nova, persiste no Firestore e devolve estado inicial.
+
+    Args:
+        log_detalhado: Se verdadeiro, inclui ``log_preparacao`` com passos didáticos.
+
+    Returns:
+        Corpo com ``id_sessao``, ``estado_jogo`` e opcionalmente ``log_preparacao``.
+    """
     estado_novo = EstadoJogo()
     log_preparacao = controlador_jogo.distribuir_cartas_novo_jogo(estado_novo)
     
@@ -48,6 +56,17 @@ def criar_novo_jogo(
 def consultar_estado_jogo(
     id_sessao: str = Path(..., description="UUID da sessão do jogo")
 ) -> dict[str, Any]:
+    """Devolve o estado serializado para o tabuleiro (visão do jogador).
+
+    Args:
+        id_sessao: UUID da partida.
+
+    Returns:
+        Resultado de :meth:`motor.estado_jogo.EstadoJogo.serializar`.
+
+    Raises:
+        HTTPException: 404 se a sessão não existir ou tiver expirado.
+    """
     estado = obter_estado(id_sessao)
     if not estado:
         raise HTTPException(status_code=404, detail="Sessão não encontrada ou expirada.")
@@ -69,6 +88,20 @@ def mover_carta(
     request: Request,
     id_sessao: str = Path(..., description="UUID da sessão do jogo")
 ) -> dict[str, Any]:
+    """Aplica um movimento (tipos 1 a 6), persiste estado e devolve resultado JSON-safe.
+
+    Args:
+        requisicao: Corpo validado com tipo de movimento e parâmetros opcionais.
+        request: Requisição HTTP (logging em falhas de serialização).
+        id_sessao: UUID da partida.
+
+    Returns:
+        Dict com ``jogada_valida``, ``operacoes_realizadas``, ``estado_jogo``, etc.
+
+    Raises:
+        HTTPException: 400 em parâmetros inválidos, 404 sessão inexistente,
+            500 apenas em falha grave de serialização do estado.
+    """
     with lock_motor_sessao(id_sessao):
         estado = obter_estado(id_sessao)
         if not estado:
@@ -177,6 +210,17 @@ def mover_carta(
 def listar_movimentos(
     id_sessao: str = Path(..., description="UUID da sessão")
 ) -> dict[str, Any]:
+    """Lista os seis tipos de movimento didáticos (metadados, não varre o tabuleiro).
+
+    Args:
+        id_sessao: UUID da partida (deve existir).
+
+    Returns:
+        Objeto com chave ``tipos_movimentos`` (lista de dicts com id, nome, descrição).
+
+    Raises:
+        HTTPException: 404 se a sessão não existir.
+    """
     estado = obter_estado(id_sessao)
     if not estado:
         raise HTTPException(status_code=404, detail="Sessão não encontrada.")
@@ -208,6 +252,17 @@ def listar_movimentos(
 def consultar_estatisticas(
     id_sessao: str = Path(..., description="UUID da sessão")
 ) -> dict[str, Any]:
+    """Devolve contadores da partida (jogadas, sequência, vitória).
+
+    Args:
+        id_sessao: UUID da partida.
+
+    Returns:
+        Dict com ``id_sessao``, ``jogo_vencido`` e bloco ``estatisticas``.
+
+    Raises:
+        HTTPException: 404 se a sessão não existir.
+    """
     estado = obter_estado(id_sessao)
     if not estado:
         raise HTTPException(status_code=404, detail="Sessão não encontrada.")

@@ -1,7 +1,12 @@
-import requests
+"""Script auxiliar: inspeciona API local e documenta ordem base→topo nas pilhas."""
+
 import json
 
-def test_foundation_pile_logic():
+import requests
+
+
+def test_foundation_pile_logic() -> None:
+    """Imprime notas sobre serialização das pilhas de fundação (smoke manual)."""
     base_url = "http://127.0.0.1:8000/api"
     
     print("1. Criando novo jogo...")

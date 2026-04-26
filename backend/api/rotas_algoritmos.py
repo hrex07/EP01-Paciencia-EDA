@@ -17,6 +17,14 @@ rotas_algoritmos = APIRouter()
 
 
 def _converter_entrada_para_cartas(lista_entrada: Optional[list[CartaEntrada]]) -> list[CartaBaralho]:
+    """Monta lista de :class:`CartaBaralho` a partir do corpo ou baralho completo padrão.
+
+    Args:
+        lista_entrada: Vetor opcional do cliente; se vazio/None, usa 52 cartas ordenadas.
+
+    Returns:
+        Lista de instâncias de carta prontas para algoritmos.
+    """
     if not lista_entrada:
         return criar_baralho_completo(registrar_passos=False)["vetor_cartas"]
     
@@ -24,7 +32,14 @@ def _converter_entrada_para_cartas(lista_entrada: Optional[list[CartaEntrada]]) 
 
 
 def _formatar_cartas_saida(resultado: dict[str, Any]) -> dict[str, Any]:
-    """Converte instâncias de CartaBaralho no vetor de saída para ditos seriais."""
+    """Converte instâncias de ``CartaBaralho`` no vetor de saída para dicts leves.
+
+    Args:
+        resultado: Saída bruta de embaralhar/ordenar (pode conter ``vetor_cartas``).
+
+    Returns:
+        Cópia superficial com ``vetor_cartas`` serializado para JSON.
+    """
     resposta = dict(resultado)
     if "vetor_cartas" in resposta:
         resposta["vetor_cartas"] = [
@@ -46,6 +61,18 @@ def embaralhar_vetor(
     metodo: str = Query("iterativo", description="Método de embaralhamento ('iterativo' ou 'recursivo')"),
     cartas: Optional[list[CartaEntrada]] = Body(None, description="Vetor opcional de cartas. Se omitido, usará 52 cartas.")
 ) -> dict[str, Any]:
+    """Embaralha o vetor de cartas com o método didático escolhido.
+
+    Args:
+        metodo: ``iterativo`` ou ``recursivo``.
+        cartas: Entrada opcional; senão baralho completo.
+
+    Returns:
+        Resultado do algoritmo com passos e vetor em formato JSON-friendly.
+
+    Raises:
+        HTTPException: 400 se o método for desconhecido.
+    """
     vetor_cartas = _converter_entrada_para_cartas(cartas)
     
     if metodo.lower() == "iterativo":
@@ -67,6 +94,18 @@ def ordenar_vetor(
     metodo: str = Query(..., description="Algoritmo de ordenação ('bubble', 'merge', 'quick')"),
     cartas: Optional[list[CartaEntrada]] = Body(None, description="Vetor opcional. Se omitido, usará 52 cartas.")
 ) -> dict[str, Any]:
+    """Ordena o vetor com Bubble, Merge ou Quick e devolve métricas e passos.
+
+    Args:
+        metodo: Nome do algoritmo.
+        cartas: Vetor opcional; se omitido, primeiro embaralha o baralho completo.
+
+    Returns:
+        Resultado formatado para JSON.
+
+    Raises:
+        HTTPException: 400 se o método for inválido.
+    """
     vetor_cartas = _converter_entrada_para_cartas(cartas)
     # Sempre interessante testar em baralho embaralhado se omitido
     if not cartas:
@@ -92,6 +131,14 @@ def ordenar_vetor(
 def comparar_ordenacao(
     cartas: Optional[list[CartaEntrada]] = Body(None, description="Vetor opcional. Se omitido, usará 52 cartas embaralhadas aleatoriamente.")
 ) -> list[dict[str, Any]]:
+    """Executa os três algoritmos de ordenação sobre cópias do mesmo vetor.
+
+    Args:
+        cartas: Entrada opcional; se omitido, usa baralho embaralhado.
+
+    Returns:
+        Lista de resultados (um dict por algoritmo), cada um formatado para JSON.
+    """
     vetor_cartas = _converter_entrada_para_cartas(cartas)
     if not cartas:
         vetor_cartas = embaralhar_iterativo(vetor_cartas, quantidade_trocas=200, registrar_passos=False)["vetor_cartas"]

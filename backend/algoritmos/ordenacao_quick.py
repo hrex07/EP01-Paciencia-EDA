@@ -7,12 +7,20 @@ from modelo.carta_baralho import CartaBaralho
 
 
 def _valor_ordem(carta: CartaBaralho) -> tuple[int, int]:
+    """Retorna tupla (peso do naipe, número) para ordenação lexicográfica."""
     naipe_peso = {"c": 0, "o": 1, "p": 2, "e": 3}
     return (naipe_peso.get(carta.naipe_carta, 0), carta.numero_carta)
 
 
 class _QuickSortInterno:
+    """Estado mutável e logging do quicksort Lomuto (ou equivalente) do módulo."""
+
     def __init__(self, registrar_passos: bool) -> None:
+        """Inicializa contadores e buffer de passos.
+
+        Args:
+            registrar_passos: Se acumula narrativa em ``lista_passos``.
+        """
         self.registrar_passos = registrar_passos
         self.total_comparacoes = 0
         self.total_trocas = 0
