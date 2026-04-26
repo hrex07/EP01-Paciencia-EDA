@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MesaJogo } from './components/painelJogo';
 import { 
   LogOperacoes, 

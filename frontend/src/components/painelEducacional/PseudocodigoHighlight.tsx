@@ -25,7 +25,7 @@ export const PseudocodigoHighlight: React.FC<PseudocodigoHighlightProps> = ({
   }, [operacao]);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: number;
     if (isPlaying && operacao && passoAtivoIndex < (operacao.passos_executados || []).length - 1) {
       interval = setInterval(() => {
         setPassoAtivoIndex(prev => {

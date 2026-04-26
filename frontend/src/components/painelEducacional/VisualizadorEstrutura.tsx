@@ -1,6 +1,6 @@
 import React from 'react';
 import type { OperacaoRealizada } from '../../tipos/tipos';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Layers, AlignJustify, List, ArrowRight } from 'lucide-react';
 
 interface VisualizadorEstruturaProps {

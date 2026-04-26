@@ -70,6 +70,7 @@ export interface ResponseNovoJogo {
 
 export interface OperacaoRealizada {
   operacao_nome: string;
+  algoritmo_nome?: string; // Para algoritmos de ordenação
   estrutura_tipo: string;
   nome_estrutura: string;
   operacao_sucesso: boolean;
