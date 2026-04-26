@@ -38,6 +38,15 @@ class ListaLigadaCartas:
         """Retorna número de cartas na lista."""
         return self.quantidade_elementos
 
+    @staticmethod
+    def desserializar(dados_lista: list[dict[str, Any]], nome_lista: str) -> ListaLigadaCartas:
+        """Recria uma instância de ListaLigadaCartas a partir de uma lista de dicionários de cartas."""
+        lista = ListaLigadaCartas(nome_lista=nome_lista)
+        for d_carta in dados_lista:
+            carta = CartaBaralho.desserializar(d_carta)
+            lista.inserir_final(carta, registrar_passos=False)
+        return lista
+
     def _no_indice(self, indice_alvo: int) -> Optional[NoEncadeado]:
         """Retorna o nó na posição `indice_alvo` (base zero) ou None."""
         if indice_alvo < 0 or indice_alvo >= self.quantidade_elementos:

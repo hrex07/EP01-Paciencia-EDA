@@ -38,6 +38,15 @@ class FilaCartas:
         """Retorna quantidade de cartas enfileiradas."""
         return self.quantidade_elementos
 
+    @staticmethod
+    def desserializar(dados_lista: list[dict[str, Any]], nome_fila: str) -> FilaCartas:
+        """Recria uma instância de FilaCartas a partir de uma lista de dicionários de cartas."""
+        fila = FilaCartas(nome_fila=nome_fila)
+        for d_carta in dados_lista:
+            carta = CartaBaralho.desserializar(d_carta)
+            fila.enfileirar(carta, registrar_passos=False)
+        return fila
+
     def enfileirar(
         self,
         carta_nova: CartaBaralho,

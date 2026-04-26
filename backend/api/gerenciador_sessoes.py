@@ -1,47 +1,55 @@
-"""Gerenciamento de sessões do jogo em memória."""
+"""Gerenciamento de sessões do jogo no Google Cloud Firestore."""
 
+import os
 import time
 from typing import Optional
 
+from google.cloud import firestore
 from motor.estado_jogo import EstadoJogo
 
-class SessaoJogo:
-    """Uma sessão ativa com controle de tempo (TTL)."""
-    def __init__(self, estado: EstadoJogo):
-        self.estado = estado
-        self.ultimo_acesso = time.time()
-
-# Dicionário que guarda as sessões ativas (id_sessao -> SessaoJogo)
-sessoes_ativas: dict[str, SessaoJogo] = {}
+# Configurações do Firestore
+PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT", "ipt-master")
+COLECAO_SESSOES = "sessoes"
 
 # Tempo de expiração (TTL) em segundos. Ex: 2 horas = 7200s
 TTL_SESSAO_SEGUNDOS = 7200
 
+# Inicializa o cliente Firestore apontando para a base 'main'
+db = firestore.Client(project=PROJECT_ID, database="main")
+
 
 def obter_estado(id_sessao: str) -> Optional[EstadoJogo]:
-    """Retorna o estado do jogo ou None se não existir / expirou."""
-    _limpar_sessoes_expiradas()
+    """Retorna o estado do jogo do Firestore ou None se não existir / expirou."""
+    doc_ref = db.collection(COLECAO_SESSOES).document(id_sessao)
+    doc = doc_ref.get()
     
-    sessao = sessoes_ativas.get(id_sessao)
-    if not sessao:
+    if not doc.exists:
         return None
         
-    sessao.ultimo_acesso = time.time()
-    return sessao.estado
+    dados = doc.to_dict()
+    
+    # Verificação manual de expiração (além do TTL nativo do Firestore se configurado)
+    agora = time.time()
+    if dados.get("expira_em", 0) < agora:
+        # Opcional: deletar se expirado
+        doc_ref.delete()
+        return None
+        
+    # Atualiza o tempo de expiração no Firestore (slide window)
+    doc_ref.update({"expira_em": agora + TTL_SESSAO_SEGUNDOS})
+    
+    return EstadoJogo.desserializar(dados["estado_completo"])
 
 
 def salvar_estado(estado: EstadoJogo) -> None:
-    """Salva o estado no dicionário de sessões."""
-    sessoes_ativas[estado.id_sessao] = SessaoJogo(estado)
-    _limpar_sessoes_expiradas()
-
-
-def _limpar_sessoes_expiradas() -> None:
-    """Remove sessões que passaram do TTL."""
+    """Salva o estado serializado no Firestore."""
     agora = time.time()
-    expiradas = [
-        id_sessao for id_sessao, sessao in sessoes_ativas.items()
-        if agora - sessao.ultimo_acesso > TTL_SESSAO_SEGUNDOS
-    ]
-    for id_sessao in expiradas:
-        del sessoes_ativas[id_sessao]
+    dados_sessao = {
+        "id_sessao": estado.id_sessao,
+        "ultimo_acesso": agora,
+        "expira_em": agora + TTL_SESSAO_SEGUNDOS,
+        "estado_completo": estado.serializar_completo()
+    }
+    
+    doc_ref = db.collection(COLECAO_SESSOES).document(estado.id_sessao)
+    doc_ref.set(dados_sessao)

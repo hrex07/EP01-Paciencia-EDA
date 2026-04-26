@@ -1,5 +1,7 @@
 """Estado encapsulado de uma partida de Paciência."""
 
+from __future__ import annotations
+
 import uuid
 from typing import Any
 
@@ -97,3 +99,84 @@ class EstadoJogo:
                 "listas_tableau": tableau_listas,
             },
         }
+
+    def serializar_completo(self) -> dict[str, Any]:
+        """Serializa o estado COMPLETO para o Banco de Dados (sem esconder cartas)."""
+        # Fila
+        fila_cartas = []
+        atual_fila = self.fila_compra.no_frente
+        while atual_fila is not None:
+            fila_cartas.append(atual_fila.dados_carta.serializar_completo())
+            atual_fila = atual_fila.proximo_no
+
+        # Pilhas
+        pilhas_dict = {}
+        for naipe, pilha in self.pilhas_fundacao.items():
+            cartas_pilha = []
+            atual_pilha = pilha.elemento_topo
+            while atual_pilha is not None:
+                # Na serialização para DB, manter a mesma lógica de ordem (base->topo)
+                cartas_pilha.insert(0, atual_pilha.dados_carta.serializar_completo())
+                atual_pilha = atual_pilha.proximo_no
+            pilhas_dict[naipe] = cartas_pilha
+
+        # Tableau
+        tableau_listas = []
+        for lista in self.listas_tableau:
+            cartas_lista = []
+            atual_lista = lista.cabeca_no
+            while atual_lista is not None:
+                cartas_lista.append(atual_lista.dados_carta.serializar_completo())
+                atual_lista = atual_lista.proximo_no
+            tableau_listas.append(cartas_lista)
+
+        return {
+            "id_sessao": self.id_sessao,
+            "jogo_vencido": self.jogo_vencido,
+            "sequencia_atual": self.sequencia_atual,
+            "maior_sequencia": self.maior_sequencia,
+            "total_jogadas": self.total_jogadas,
+            "estruturas": {
+                "fila_compra": fila_cartas,
+                "pilhas_fundacao": pilhas_dict,
+                "listas_tableau": tableau_listas,
+            },
+        }
+
+    @staticmethod
+    def desserializar(dados: dict[str, Any]) -> EstadoJogo:
+        """Recria o EstadoJogo completo a partir do dicionário do Banco de Dados."""
+        estado = EstadoJogo()
+        estado.id_sessao = dados["id_sessao"]
+        estado.jogo_vencido = dados.get("jogo_vencido", False)
+        estado.sequencia_atual = dados.get("sequencia_atual", 0)
+        estado.maior_sequencia = dados.get("maior_sequencia", 0)
+        estado.total_jogadas = dados.get("total_jogadas", 0)
+
+        estruturas = dados["estruturas"]
+
+        # Fila
+        estado.fila_compra = FilaCartas.desserializar(
+            estruturas["fila_compra"], nome_fila="fila_compra"
+        )
+
+        # Pilhas
+        for naipe in ["c", "o", "p", "e"]:
+            nome_p = f"pilha_{naipe}" # Simplificando mas deveria bater com o __init__
+            # No __init__: copas, ouros, paus, espadas.
+            mapa_nomes = {"c": "copas", "o": "ouros", "p": "paus", "e": "espadas"}
+            nome_real = f"pilha_{mapa_nomes[naipe]}"
+            estado.pilhas_fundacao[naipe] = PilhaCartas.desserializar(
+                estruturas["pilhas_fundacao"][naipe], nome_pilha=nome_real
+            )
+
+        # Tableau
+        estado.listas_tableau = []
+        for i, lista_json in enumerate(estruturas["listas_tableau"]):
+            estado.listas_tableau.append(
+                ListaLigadaCartas.desserializar(
+                    lista_json, nome_lista=f"lista_ligada_{i+1}"
+                )
+            )
+
+        return estado

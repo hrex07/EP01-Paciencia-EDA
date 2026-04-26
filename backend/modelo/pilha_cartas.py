@@ -39,6 +39,15 @@ class PilhaCartas:
         """Retorna número de cartas atualmente empilhadas."""
         return self.quantidade_elementos
 
+    @staticmethod
+    def desserializar(dados_lista: list[dict[str, Any]], nome_pilha: str) -> PilhaCartas:
+        """Recria uma instância de PilhaCartas a partir de uma lista de dicionários de cartas."""
+        pilha = PilhaCartas(nome_pilha=nome_pilha)
+        for d_carta in dados_lista:
+            carta = CartaBaralho.desserializar(d_carta)
+            pilha.empilhar(carta, registrar_passos=False)
+        return pilha
+
     def empilhar(
         self,
         carta_nova: CartaBaralho,

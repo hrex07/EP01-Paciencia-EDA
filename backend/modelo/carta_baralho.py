@@ -80,6 +80,29 @@ class CartaBaralho:
             "cor": self.cor_carta(),
         }
 
+    def serializar_completo(self) -> dict[str, Any]:
+        """Mapeia a carta para dicionário JSON completo (para o Banco de Dados)."""
+        return {
+            "numero_carta": self.numero_carta,
+            "naipe_carta": self.naipe_carta,
+            "status_carta": self.status_carta,
+        }
+
+    @staticmethod
+    def desserializar(dados: dict[str, Any]) -> CartaBaralho:
+        """Recria uma instância de CartaBaralho a partir de um dicionário.
+
+        Se a carta estava virada para baixo no JSON serializado para a API, 
+        ela não terá número/naipe. Nesses casos, o Firestore deve armazenar 
+        o estado completo. Assumimos que para o Banco de Dados salvamos sempre 
+        o estado completo da carta.
+        """
+        return CartaBaralho(
+            numero_carta=dados["numero_carta"],
+            naipe_carta=dados["naipe_carta"],
+            status_carta=dados.get("status_carta", False),
+        )
+
     def texto_carta(self) -> str:
         """Representação curta legível: número + símbolo do naipe Unicode.
 
