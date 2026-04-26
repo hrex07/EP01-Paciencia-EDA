@@ -66,16 +66,25 @@ export const LogOperacoes: React.FC<LogOperacoesProps> = ({
                 {getIconeEstrutura(op.estrutura_tipo)}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex justify-between">
-                  <span className="font-mono font-medium text-gray-200">
-                    {op.operacao_nome}()
+                <div className="flex justify-between gap-2">
+                  <span className="font-mono font-medium text-gray-200 truncate" title={op.operacao_nome || undefined}>
+                    {op.operacao_nome ? `${op.operacao_nome}()` : '—'}
                   </span>
-                  <span className={op.operacao_sucesso ? 'text-green-400' : 'text-red-400'}>
-                    {op.operacao_sucesso ? 'OK' : 'ERRO'}
+                  <span
+                    className={
+                      op.operacao_sucesso === true
+                        ? 'text-green-400 shrink-0'
+                        : op.operacao_sucesso === false
+                          ? 'text-red-400 shrink-0'
+                          : 'text-gray-500 shrink-0'
+                    }
+                  >
+                    {op.operacao_sucesso === true ? 'OK' : op.operacao_sucesso === false ? 'ERRO' : '—'}
                   </span>
                 </div>
-                <div className="text-xs text-gray-500 truncate mt-0.5">
-                  {op.nome_estrutura} ({(op.passos_executados || []).length} passos)
+                <div className="text-xs text-gray-500 truncate mt-0.5" title={op.mensagem_erro}>
+                  {op.nome_estrutura || '—'} ({(op.passos_executados || []).length} passos)
+                  {op.operacao_sucesso === false && op.mensagem_erro ? ` · ${op.mensagem_erro}` : ''}
                 </div>
               </div>
             </div>

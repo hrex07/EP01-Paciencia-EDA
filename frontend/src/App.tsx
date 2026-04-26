@@ -7,14 +7,25 @@ import {
   VisualizadorEstrutura, 
   ComparadorAlgoritmos 
 } from './components/painelEducacional';
-import type { EstadoJogo, OperacaoRealizada, StreakJogo } from './tipos/tipos';
+import type { EstadoJogo, OperacaoRealizada, PassoExecucao, StreakJogo } from './tipos/tipos';
+
+/** A API devolve `log_preparacao` como lista de passos (não de operações). Envolve numa operação para o painel. */
+function operacaoDePreparacao(passos: PassoExecucao[]): OperacaoRealizada {
+  return {
+    operacao_nome: 'preparar_mesa',
+    estrutura_tipo: 'baralho_embaralhar_listas_fila',
+    nome_estrutura: 'Distribuição inicial',
+    operacao_sucesso: true,
+    passos_executados: passos,
+  };
+}
 import { jogoService } from './servicos/apiJogo';
-import { Play, RotateCcw, BarChart2, Volume2, VolumeX, Menu } from 'lucide-react';
+import { RotateCcw, BarChart2, Volume2, VolumeX, Menu } from 'lucide-react';
 
 function App() {
   const [estado, setEstado] = useState<EstadoJogo | null>(null);
   const [loading, setLoading] = useState(false);
-  const [painelAberto, setPainelAberto] = useState(true);
+  const [painelAberto, setPainelAberto] = useState(false);
   const [somAtivo, setSomAtivo] = useState(true);
 
   // Estados do Painel Educacional
@@ -29,10 +40,15 @@ function App() {
     try {
       const resp = await jogoService.criarNovoJogo(true);
       setEstado(resp.estado_jogo);
-      setOperacoes(resp.log_preparacao || []);
-      if (resp.log_preparacao && resp.log_preparacao.length > 0) {
-        setOperacaoAtiva(resp.log_preparacao[0]);
+      const passosPrep = resp.log_preparacao ?? [];
+      if (passosPrep.length > 0) {
+        const opPrep = operacaoDePreparacao(passosPrep);
+        setOperacoes([opPrep]);
+        setOperacaoAtiva(opPrep);
         setPassoAtual(1);
+      } else {
+        setOperacoes([]);
+        setOperacaoAtiva(null);
       }
     } catch (e) {
       console.error('Erro ao iniciar jogo:', e);
@@ -50,9 +66,6 @@ function App() {
       setAbaAtiva('estruturas');
     }
     
-    // Atualiza estado do jogo chamando a API novamente ou usando o retornado?
-    // O ideal seria pegar o novo estado de jogo, mas a MesaJogo já lida com o estado visual.
-    // Vamos apenas atualizar os componentes.
     if (streak) {
       console.log("Streak:", streak.nivel_efeito, streak.mensagem_educacional);
     }
@@ -68,13 +81,15 @@ function App() {
         </div>
         
         <div className="flex items-center space-x-4">
-          <button 
+          <button
+            type="button"
             onClick={iniciarJogo}
             disabled={loading}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-md font-medium transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed rounded-md font-medium transition-colors"
+            title="Inicia uma partida nova (outro embaralhamento e outra sessão)"
           >
-            <Play size={18} />
-            <span>Novo Jogo</span>
+            <RotateCcw size={18} />
+            <span>{loading ? 'A preparar...' : 'Novo Jogo'}</span>
           </button>
           
           <div className="h-6 w-px bg-white/20 mx-2" />
@@ -117,10 +132,11 @@ function App() {
                 Aprenda Estruturas de Dados e Análise de Algoritmos na prática. 
                 Jogue Solitaire e visualize Pilhas, Filas e Listas Ligadas em tempo real.
               </p>
-              <button 
+              <button
+                type="button"
                 onClick={iniciarJogo}
                 disabled={loading}
-                className="px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-bold text-lg shadow-lg hover:shadow-blue-500/25 transition-all"
+                className="px-8 py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-bold text-lg shadow-lg hover:shadow-blue-500/25 transition-all"
               >
                 {loading ? 'Preparando Baralho...' : 'Iniciar Partida'}
               </button>
@@ -137,9 +153,11 @@ function App() {
                 </div>
               </div>
               
-              <MesaJogo 
-                idSessao={estado.id_sessao} 
-                estadoInicial={estado} 
+              <MesaJogo
+                key={estado.id_sessao}
+                idSessao={estado.id_sessao}
+                estadoJogo={estado}
+                onSincronizarEstado={setEstado}
                 onOperacoesRealizadas={handleOperacoes}
               />
             </div>
