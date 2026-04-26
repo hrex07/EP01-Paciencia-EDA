@@ -80,7 +80,9 @@ function App() {
     
     if (streak) {
       setStreakAtivo(streak);
-      if (streak.nivel_efeito && streak.nivel_efeito !== 'erro') {
+      if (streak.nivel_efeito === 'erro') {
+        somUtils.playErro();
+      } else if (streak.nivel_efeito) {
         somUtils.playStreak(streak.nivel_efeito);
       }
     }

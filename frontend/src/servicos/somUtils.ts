@@ -1,13 +1,26 @@
-import { Howl, Howler } from 'howler';
+import { Howler } from 'howler';
 
-// Sons base (placeholders, na prática seriam arquivos .mp3 na pasta public)
-const sounds = {
-  click: new Howl({ src: ['/sounds/click.mp3'], volume: 0.5 }),
-  erro: new Howl({ src: ['/sounds/error.mp3'], volume: 0.4 }),
-  streakBasico: new Howl({ src: ['/sounds/streak1.mp3'], volume: 0.6 }),
-  streakBom: new Howl({ src: ['/sounds/streak2.mp3'], volume: 0.6 }),
-  streakOtimo: new Howl({ src: ['/sounds/streak3.mp3'], volume: 0.6 }),
-  vitoria: new Howl({ src: ['/sounds/victory.mp3'], volume: 0.8 }),
+// Sistema de áudio sintetizado para evitar dependência de arquivos MP3 externos
+const playTone = (freq: number, type: OscillatorType, duration: number, volume: number) => {
+  try {
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    
+    gain.gain.setValueAtTime(volume, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+  } catch (e) {
+    console.warn("Áudio não suportado ou bloqueado pelo navegador", e);
+  }
 };
 
 let somAtivo = true;
@@ -15,15 +28,21 @@ let somAtivo = true;
 export const somUtils = {
   setAtivo(ativo: boolean) {
     somAtivo = ativo;
-    Howler.mute(!ativo);
+    if (typeof Howler !== 'undefined') {
+      Howler.mute(!ativo);
+    }
   },
   
   playClick() {
-    if (somAtivo) sounds.click.play();
+    if (!somAtivo) return;
+    // Som de clique curto e agudo
+    playTone(800, 'sine', 0.1, 0.1);
   },
   
   playErro() {
-    if (somAtivo) sounds.erro.play();
+    if (!somAtivo) return;
+    // Som de erro grave e curto
+    playTone(150, 'sawtooth', 0.2, 0.05);
   },
   
   playStreak(nivel: string) {
@@ -31,18 +50,25 @@ export const somUtils = {
     
     switch (nivel) {
       case 'bom':
-        sounds.streakBasico.play();
+        playTone(500, 'sine', 0.3, 0.1);
+        setTimeout(() => playTone(600, 'sine', 0.3, 0.1), 100);
         break;
       case 'otimo':
       case 'confetti':
-        sounds.streakBom.play();
+        playTone(600, 'sine', 0.4, 0.1);
+        setTimeout(() => playTone(800, 'sine', 0.4, 0.1), 100);
         break;
       case 'incrivel':
       case 'mestre':
-        sounds.streakOtimo.play();
+        playTone(400, 'triangle', 0.5, 0.1);
+        setTimeout(() => playTone(600, 'triangle', 0.5, 0.1), 150);
+        setTimeout(() => playTone(800, 'triangle', 0.5, 0.1), 300);
         break;
       case 'vitoria':
-        sounds.vitoria.play();
+        // Arpejo de vitória
+        [440, 554, 659, 880].forEach((f, i) => {
+          setTimeout(() => playTone(f, 'sine', 0.6, 0.1), i * 150);
+        });
         break;
     }
   }
